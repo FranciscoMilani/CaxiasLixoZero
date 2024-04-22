@@ -1,8 +1,6 @@
 package br.ucs.caxiaslixozero.Domain.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +10,8 @@ import java.time.LocalDateTime;
 public class Ecopoint {
 
     @Id
-    public Long ecopointId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long id;
     public String name;
     public LocalDateTime openingDateTime;
     public LocalDateTime closingDateTime;

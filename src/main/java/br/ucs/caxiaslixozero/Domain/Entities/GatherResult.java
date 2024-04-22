@@ -6,14 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table
 public class GatherResult {
 
     @Id
-    public Long gatherId;
+    public Long id;
     public LocalDate startGatherDate;
     public LocalDate endGatherDate;
     public float collectedAmount;
