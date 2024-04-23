@@ -16,6 +16,7 @@ public class Ecopoint {
     private String responsibleName;
     private String responsiblePhone;
     private String socialNetwork;
+    @OneToOne
     private Address ecopointAdress;
     private String residueType;
     private Boolean isPublic;

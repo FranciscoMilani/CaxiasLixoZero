@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ecopointController {
 
-    @GetMapping("/")
+    @GetMapping("/ecopoint")
     public String registerEcopoint() {
         return "registerEcopoint";
     }
