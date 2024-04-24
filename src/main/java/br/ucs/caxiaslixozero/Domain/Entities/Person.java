@@ -1,7 +1,8 @@
 package br.ucs.caxiaslixozero.Domain.Entities;
 
-import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
+@MappedSuperclass
 public abstract class Person {
 
     public String name;
