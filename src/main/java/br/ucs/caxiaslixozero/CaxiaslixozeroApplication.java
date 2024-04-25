@@ -8,6 +8,6 @@ public class CaxiaslixozeroApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CaxiaslixozeroApplication.class, args);
-	}
+	} 
 
 }
