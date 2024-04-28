@@ -19,7 +19,4 @@ public class EcopointOwner extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
-
-    public EcopointOwner() {
-    }
 }

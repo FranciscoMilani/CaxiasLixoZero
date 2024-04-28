@@ -24,6 +24,4 @@ public class GatherResult {
     public float collectedAmount;
     public MeasureType measureType;
 
-    public GatherResult() {
-    }
 }

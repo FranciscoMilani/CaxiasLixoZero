@@ -1,0 +1,16 @@
+<header layout:fragment="navbar">
+    <div class="container-fluid d-flex align-items-center justify-content-evenly p-3 bg-light rounded-2 w-100 ps-5 pe-5 w-100">
+        <div class="flex-grow-1 text-nowrap" id="navLogo">
+            <a class="align-middle text-center" href="/">Caxias Lixo Zero</a>
+        </div>
+        <nav class="container-fluid d-flex align-items-center justify-content-end ms-5 p-0" id="navItems">
+            <ul class="nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Início</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/ecopoints}">Mapa de Ecopontos</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/reciclopedia}">Reciclopédia</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{registerEcopoint}">Formulário Ecopontos</a></li>
+                <li class="nav-item"><button type="button" class="btn btn-primary" >Entrar/Cadastrar</button></li>
+            </ul>
+        </nav>
+    </div>
+</header>
