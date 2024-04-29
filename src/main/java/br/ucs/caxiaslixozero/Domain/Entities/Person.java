@@ -5,10 +5,10 @@ import jakarta.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class Person {
 
-    public String name;
-    public String cpf;
-    public String phoneNumber;
-    public String emailAddress;
-    public char sex;
+    private String name;
+    private String cpf;
+    private String phoneNumber;
+    private String emailAddress;
+    private char sex;
 
 }
