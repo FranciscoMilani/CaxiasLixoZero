@@ -1,9 +1,12 @@
 package br.ucs.caxiaslixozero.UI.Ecopoints.Controller;
 
+import org.codehaus.groovy.transform.SourceURIASTTransformation;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 @Controller
 public class ecopointController {
@@ -16,8 +19,15 @@ public class ecopointController {
         return mv;
     }
     
-    @PostMapping("/index")
-    public void saveRegisterEcopoint(String email) {
-    	System.out.println(email);
+    @PostMapping("/saveEcopoint")
+    public ModelAndView saveEcopoint(ModelAndView mv) {
+        mv.addObject("Sucesso");
+        mv.setViewName("registerEcopoint");
+        return mv;
+    }
+
+    @GetMapping("/ecopontos")
+    public String mapaEcopontos() {
+        return "mapainterativo";
     }
 }

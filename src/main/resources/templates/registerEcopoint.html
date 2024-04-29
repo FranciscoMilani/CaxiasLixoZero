@@ -9,7 +9,7 @@
 <body layout:fragment="body">
 	<main>
 		<section class="container-fluid d-flex justify-content-center" style="max-width: 500px;">
-			<form action="/index" method="POST">
+			<form action="/saveEcopoint" th:object="${ecopoint}" method="POST">
 				<div>
 					<label for="inputEmail1" class="form-label">E-mail</label>
 					<input type="email" class="form-control" id="inputEmail1" name="email" th:value="${email}"/>
