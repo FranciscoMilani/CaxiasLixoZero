@@ -9,66 +9,42 @@
 <body layout:fragment="body">
 	<main>
 		<section class="container-fluid d-flex justify-content-center" style="max-width: 500px;">
-			<form action="/saveEcopoint" th:object="${ecopoint}" method="POST">
-				<div>
+			<form action="/saveEcopoint" th:object="${ecopoint}" method="post">
 					<label for="inputEmail1" class="form-label">E-mail</label>
-					<input type="email" class="form-control" id="inputEmail1" name="email" th:value="${email}"/>
-
+					<input type="email" class="form-control" id="inputEmail1" name="email"/>
+					
 					<label for="inputNome" class="form-label">Nome da Empresa / Instituição / Estabelecimento</label>
-					<input type="text" class="form-control" id="inputNome" th:value="${nome}"/>
-
+					<input type="text" class="form-control" id="inputNome" name="companyName"/>
+					
 					<label for="inputResponsavel" class="form-label">Responsável pelo cadastro (nome)</label>
-					<input type="text" class="form-control" id="inputResponsavel" th:value="${responsavel}"/>
-
+					<input type="text" class="form-control" id="inputResponsavel" name="responsibleName"/>
+					
 					<label for="inputEmail1Resp" class="form-label">E-mail ou WhatsApp (preferível) do responsável pelo cadastro</label>
-					<input type="email" class="form-control" id="inputEmail1Resp" th:value="${emailResp}"/>
-
+					<input type="text" class="form-control" id="inputEmail1Resp" name="responsiblePhone"/>
+					
 					<label for="inputRedeSocial" class="form-label">Redes sociais do local (se houver)</label>
-					<input type="text" class="form-control" id="inputRedeSocial" th:value="${redeSocial}"/>
+					<input type="text" class="form-control" id="inputRedeSocial" name="socialNetwork"/>
+					
+					<br/>
 					<p>Tipo de resíduo que o Ecoponto vai receber (selecionar um ou mais!)</p>
 					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="" id="check1">
-					  <label class="form-check-label" for="check1">
-						Esponjas de cozinha usadas
-					  </label>
-					  <input class="form-check-input" type="checkbox" value="" id="check2">
-					  <label class="form-check-label" for="check2">
-						Embalagens Laminadas (de salgadinho, biscoitos, bombons, etc.)
-					  </label>
-					  <input class="form-check-input" type="checkbox" value="" id="check3">
-					  <label class="form-check-label" for="check3">
-						Raios X
-					  </label>
-					  <input class="form-check-input" type="checkbox" value="" id="check4">
-					  <label class="form-check-label" for="check4">
-						Cápsulas de Café (de todas as marcas)
-					  </label>
-					  <input class="form-check-input" type="checkbox" value="" id="check5">
-					  <label class="form-check-label" for="check5">
-						Óleo de Cozinha usado (preferível envasado em garrafa de plástico).
-					  </label>
-					  <input class="form-check-input" type="checkbox" value="" id="check6">
-					  <label class="form-check-label" for="check6">
-						Eletrônicos de pequeno porte (mouse, notebook, celular, carregadores, etc.)
-					  </label>
-					</div>
+					<label th:each="opcao : ${opcoes}">
+			            <input class="form-check-input" type="checkbox" name="opcoesSelecionadas" th:value="${opcao}" />
+			            <span th:text="${opcao}"></span>
+			            <br/>
+			        </label>
+			        </div>
+					<br/>
 					<br/>
 					<p>Seu Ecoponto vai ser aberto ao público em geral?*</p>
 					<div class="form-check">
-					  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-					  <label class="form-check-label" for="flexRadioDefault1">
-					    Sim
-					  </label>
-					  </div>
-					  <div class="form-check">
-					  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-					  <label class="form-check-label" for="flexRadioDefault2">
-					   	Não
-					  </label>
+			 			<input class="form-check-input" type="radio" th:field="*{isPublic}" value="true"/> Sim
+			 		</div>
+			 		<div class="form-check">
+	        			<input class="form-check-input" type="radio" th:field="*{isPublic}" value="false"/> Não
 					</div>
-				</div>
-
-				<button type="submit" class="btn btn-primary">Enviar</button>
+					<br/><br/>
+					<button type="submit" class="btn btn-primary">Enviar</button>
 			</form>
 		</section>
 	</main>
