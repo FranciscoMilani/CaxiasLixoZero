@@ -3,6 +3,7 @@ package br.ucs.caxiaslixozero.Domain.Entities;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -18,7 +19,10 @@ public class Ecopoint {
     private String socialNetwork;
     @OneToOne
     private Address ecopointAdress;
-    private String residueType;
+    @ElementCollection
+    @CollectionTable(name = "ecopoint_residues", joinColumns = @JoinColumn(name = "ecopoint_id"))
+    @Column(name = "string")
+    private List<String> residueType;
     private Boolean isPublic;
     private Date solicitationDate;
     private Date openingDateTime;
@@ -67,12 +71,6 @@ public class Ecopoint {
 	public void setEcopointAdress(Address ecopointAdress) {
 		this.ecopointAdress = ecopointAdress;
 	}
-	public String getResidueType() {
-		return residueType;
-	}
-	public void setResidueType(String residueType) {
-		this.residueType = residueType;
-	}
 	public Boolean getIsPublic() {
 		return isPublic;
 	}
@@ -102,5 +100,11 @@ public class Ecopoint {
 	}
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+	public List<String> getResidueType() {
+		return residueType;
+	}
+	public void setResidueType(List<String> residueType) {
+		this.residueType = residueType;
 	}
 }
