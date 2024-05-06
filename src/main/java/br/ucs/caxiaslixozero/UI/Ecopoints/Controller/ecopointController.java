@@ -2,6 +2,8 @@ package br.ucs.caxiaslixozero.UI.Ecopoints.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +14,10 @@ import br.ucs.caxiaslixozero.Domain.Entities.Ecopoint;
 import br.ucs.caxiaslixozero.Services.Ecopoints.EcopointServices;
 
 @Controller
+@RequiredArgsConstructor
 public class ecopointController {
-	private EcopointServices ecopointServices = new EcopointServices();
+
+	private final EcopointServices ecopointServices;
 
 	@GetMapping("/registerEcopoint")
 	public ModelAndView registerEcopoint() {
@@ -32,16 +36,10 @@ public class ecopointController {
 
 	@PostMapping("/registerEcopoint")
 	public ModelAndView saveEcopoint(ModelAndView mv, Ecopoint ecopoint, Address address) {
-		ecopoint.setEcopointAdress(address);
+		ecopoint.setEcopointAddress(address);
 		this.ecopointServices.saveEcopoint(ecopoint);
 		mv.addObject("Sucesso");
 		mv.setViewName("registerEcopoint");
 		return mv;
-	}
-	
-
-	@GetMapping("/ecopontos")
-	public String mapaEcopontos() {
-		return "mapainterativo";
 	}
 }

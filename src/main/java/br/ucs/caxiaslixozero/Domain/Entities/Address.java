@@ -19,9 +19,7 @@ public class Address {
     private Integer number;
     private String addOn;
     private String neighborhood;
-    
-	public Address() {
-	}
+
 
 	public Long getId() {
 		return id;

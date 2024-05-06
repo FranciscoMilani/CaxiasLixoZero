@@ -18,7 +18,7 @@ public class Ecopoint {
     private String responsiblePhone;
     private String socialNetwork;
     @OneToOne
-    private Address ecopointAdress;
+    private Address ecopointAddress;
     @ElementCollection
     @CollectionTable(name = "ecopoint_residues", joinColumns = @JoinColumn(name = "ecopoint_id"))
     @Column(name = "string")
@@ -65,11 +65,11 @@ public class Ecopoint {
 	public void setSocialNetwork(String socialNetwork) {
 		this.socialNetwork = socialNetwork;
 	}
-	public Address getEcopointAdress() {
-		return ecopointAdress;
+	public Address getEcopointAddress() {
+		return ecopointAddress;
 	}
-	public void setEcopointAdress(Address ecopointAdress) {
-		this.ecopointAdress = ecopointAdress;
+	public void setEcopointAddress(Address ecopointAddress) {
+		this.ecopointAddress = ecopointAddress;
 	}
 	public Boolean getIsPublic() {
 		return isPublic;
