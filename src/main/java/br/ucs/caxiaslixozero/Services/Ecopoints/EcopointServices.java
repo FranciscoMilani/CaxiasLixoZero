@@ -4,12 +4,14 @@ import br.ucs.caxiaslixozero.Domain.Dtos.EcopointMapDto;
 import br.ucs.caxiaslixozero.Domain.Repositories.EcopointRepository;
 import br.ucs.caxiaslixozero.Infrastructure.Mappers.EcopointMapper;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.ucs.caxiaslixozero.Domain.Entities.Address;
 import br.ucs.caxiaslixozero.Domain.Entities.Ecopoint;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,44 +19,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EcopointServices {
 
-	@PersistenceContext
-    private EntityManager entityManager;
-    private final EcopointRepository repository;
+	private final EntityManager entityManager; // Removido o autowiring
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+	private final EcopointRepository repository;
 
-    public void saveEcopoint(Ecopoint ecoponto) {
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(ecoponto);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
+	@Transactional // Anotação movida para o método
+	public void saveEcopoint(Ecopoint ecoponto) {
+		try {
+			entityManager.persist(ecoponto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Transactional // Anotação movida para o método
+	public Address saveAddress(Address address) {
+		try {
+			entityManager.persist(address);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return address;
+	}
 
-    public List<EcopointMapDto> getAllToMapEcopoint() {
-        return repository
-                .findAll()
-                .stream()
-                .map(EcopointMapper.INSTANCE::toEcopointMapDto)
-                .toList();
-    }
+	public List<EcopointMapDto> getAllToMapEcopoint() {
+		return repository.findAll().stream().map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
+	}
 
-    public List<EcopointMapDto> getMapEcopointFilteredByResidue(List<String> residueTypes) {
-        return repository
-                .findFirst10ByResidueTypeIn(residueTypes)
-                .stream()
-                .map(EcopointMapper.INSTANCE::toEcopointMapDto)
-                .toList();
-    }
+	public List<EcopointMapDto> getMapEcopointFilteredByResidue(List<String> residueTypes) {
+		return repository.findFirst10ByResidueTypeIn(residueTypes).stream()
+				.map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
+	}
 
 //    public List<EcopointMapDto> getMapEcopointFilteredByNeighborhood(String neighborhood) {
 //        return _repository

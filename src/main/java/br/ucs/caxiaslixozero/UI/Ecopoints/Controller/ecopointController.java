@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import br.ucs.caxiaslixozero.Domain.Entities.Address;
 import br.ucs.caxiaslixozero.Domain.Entities.Ecopoint;
 import br.ucs.caxiaslixozero.Services.Ecopoints.EcopointServices;
+import org.springframework.ui.Model;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,11 +37,11 @@ public class ecopointController {
 	}
 
 	@PostMapping("/registerEcopoint")
-	public ModelAndView saveEcopoint(ModelAndView mv, Ecopoint ecopoint, Address address) {
+	public String saveEcopoint(Model mv, Ecopoint ecopoint, Address address) {
+		address = this.ecopointServices.saveAddress(address);
 		ecopoint.setEcopointAddress(address);
 		this.ecopointServices.saveEcopoint(ecopoint);
-		mv.addObject("Sucesso");
-		mv.setViewName("registerEcopoint");
-		return mv;
+		mv.addAttribute("aviso", "Esta é uma mensagem de aviso.");
+		return "registerEcopoint";
 	}
 }
