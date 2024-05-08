@@ -17,3 +17,32 @@ body {
 #mapHeader > select {
     width: 33%;
 }
+
+.tableEcopoints {
+    border-collapse: collapse;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.tableEcopoints th, 
+.tableEcopoints td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.tableEcopoints th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+.tableEcopoints tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.tableEcopoints tr:hover {
+    background-color: #ddd;
+}
+ .tableEcopoints {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}

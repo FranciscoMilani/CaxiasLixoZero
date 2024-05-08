@@ -5,7 +5,6 @@ import br.ucs.caxiaslixozero.Domain.Repositories.EcopointRepository;
 import br.ucs.caxiaslixozero.Infrastructure.Mappers.EcopointMapper;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ucs.caxiaslixozero.Domain.Entities.Address;
@@ -40,6 +39,10 @@ public class EcopointServices {
 			e.printStackTrace();
 		}
 		return address;
+	}
+	
+	public List<Ecopoint> getAllEcopoints(){
+		return repository.findAll();
 	}
 
 	public List<EcopointMapDto> getAllToMapEcopoint() {

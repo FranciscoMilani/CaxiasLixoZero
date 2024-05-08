@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>Lista Ecopontos</title>
+</head>
+<body layout:fragment="body">
+	<table class="tableEcopoints" border="1">
+		<thead>
+			<tr>
+				<th>Empresa</th>
+				<th>E-mail</th>
+				<th>Responsável</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="ecopoint : ${ecopoints}">
+				<td th:text="${ecopoint.companyName}"></td>
+				<td th:text="${ecopoint.email}"></td>
+				<td th:text="${ecopoint.responsibleName}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
