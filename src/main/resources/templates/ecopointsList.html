@@ -4,23 +4,73 @@
 	layout:decorate="~{layout}">
 <head>
 <title>Lista Ecopontos</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body layout:fragment="body">
 	<table class="tableEcopoints" border="1">
 		<thead>
 			<tr>
+				<th>Dt. Solicitação</th>
 				<th>Empresa</th>
 				<th>E-mail</th>
 				<th>Responsável</th>
+				<th>Telefone Resp.</th>
+				<th>Rede Social</th>
+				<th>Endereço</th>
+				<th>Resíduos</th>
+				<th>Aprovar</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="ecopoint : ${ecopoints}">
+				<td
+					th:text="${#dates.format(ecopoint.solicitationDate, 'dd/MM/yyyy')}"></td>
 				<td th:text="${ecopoint.companyName}"></td>
 				<td th:text="${ecopoint.email}"></td>
 				<td th:text="${ecopoint.responsibleName}"></td>
+				<td th:text="${ecopoint.responsiblePhone}"></td>
+				<td th:text="${ecopoint.socialNetwork}"></td>
+				<td><button type="button" class="btn">
+						<i class="fas fa-search"></i>
+					</button></td>
+				<td><button type="button" class="btn">
+						<i class="fas fa-search"></i>
+					</button></td>
+				<td><button type="button" class="btn-aprovar" th:attr="data-id=${ecopoint.id}">
+                        <i class="fas fa-check"></i>
+                    </button></td>
 			</tr>
 		</tbody>
 	</table>
+
+	<script>
+	document.querySelectorAll('.btn-aprovar').forEach(btn => {
+	    btn.addEventListener('click', function() {
+	        var id = btn.getAttribute('data-id');
+	        fetch('/ecopointsList', {
+	            method: 'POST',
+	            headers: {
+	                'Content-Type': 'application/json',
+	            },
+	            body: JSON.stringify({ id: id }),
+	        })
+	        .then(response => {
+	            if (response.ok) {
+	                return response.text();
+	            }
+	            throw new Error('Erro ao processar a solicitação');
+	        })
+	        .then(data => {
+	            alert(data);
+	        })
+	        .catch(error => {
+	            console.error('Erro ao enviar requisição:', error);
+	            alert('Erro ao processar a solicitação');
+	        });
+	    });
+	});
+    </script>
 </body>
 </html>

@@ -13,6 +13,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,15 @@ public class EcopointServices {
 	}
 	
 	@Transactional // Anotação movida para o método
+	public void updateEcopoint(Ecopoint ecoponto) {
+		try {
+			entityManager.merge(ecoponto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Transactional // Anotação movida para o método
 	public Address saveAddress(Address address) {
 		try {
 			entityManager.persist(address);
@@ -43,6 +53,11 @@ public class EcopointServices {
 	
 	public List<Ecopoint> getAllEcopoints(){
 		return repository.findAll();
+	}
+	
+	public Ecopoint findEcopointById(Long id){
+		Optional<Ecopoint> ecopointOptional = repository.findById(id);
+	    return ecopointOptional.orElse(null);
 	}
 
 	public List<EcopointMapDto> getAllToMapEcopoint() {

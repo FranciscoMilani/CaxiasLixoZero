@@ -28,6 +28,7 @@ public class Ecopoint {
     private Date openingDateTime;
     private Date closingDateTime;
     private String imageUrl;
+    private Boolean isApproved;
     
 	public Long getId() {
 		return id;
@@ -106,5 +107,11 @@ public class Ecopoint {
 	}
 	public void setResidueType(List<String> residueType) {
 		this.residueType = residueType;
+	}
+	public Boolean getIsApproved() {
+		return isApproved;
+	}
+	public void setIsApproved(Boolean isApproved) {
+		this.isApproved = isApproved;
 	}
 }

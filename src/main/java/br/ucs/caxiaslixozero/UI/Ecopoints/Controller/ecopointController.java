@@ -1,13 +1,18 @@
 package br.ucs.caxiaslixozero.UI.Ecopoints.Controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ucs.caxiaslixozero.Domain.Entities.Address;
@@ -40,8 +45,27 @@ public class ecopointController {
 	public String saveEcopoint(Model mv, Ecopoint ecopoint, Address address) {
 		address = this.ecopointServices.saveAddress(address);
 		ecopoint.setEcopointAddress(address);
+		ecopoint.setSolicitationDate(new Date());
+		ecopoint.setIsApproved(Boolean.FALSE);
 		this.ecopointServices.saveEcopoint(ecopoint);
-		mv.addAttribute("aviso", "Esta é uma mensagem de aviso.");
+		mv.addAttribute("aviso", "Ecoponto salvo!");
 		return "registerEcopoint";
+	}
+
+	@GetMapping("/addressList")
+	public ModelAndView addressList() {
+		ModelAndView mv = new ModelAndView("addressList");
+		return mv;
+	}
+
+	@PostMapping("/ecopointsList")
+	@ResponseBody
+	public ResponseEntity<String> approveEcopoint(@RequestBody Map<String, String> requestBody) {
+		String id = requestBody.get("id");
+		Ecopoint ec = ecopointServices.findEcopointById(Long.parseLong(id));
+		ec.setIsApproved(Boolean.TRUE);
+		this.ecopointServices.updateEcopoint(ec);
+	    
+	    return ResponseEntity.ok("Ecopoint aprovado com sucesso! ID: " + id);
 	}
 }
