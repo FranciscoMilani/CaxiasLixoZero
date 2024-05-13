@@ -2,6 +2,7 @@ package br.ucs.caxiaslixozero.Domain.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,10 @@ public class Ecopoint {
     private Date closingDateTime;
     private String imageUrl;
     private Boolean isApproved;
-    
+//	@ManyToMany
+//	@JoinTable(name = "ecopoint_residue")
+//	private Collection<Residue> residues;
+
 	public Long getId() {
 		return id;
 	}

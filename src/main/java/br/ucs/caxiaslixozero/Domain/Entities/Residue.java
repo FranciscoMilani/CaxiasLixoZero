@@ -1,9 +1,7 @@
 package br.ucs.caxiaslixozero.Domain.Entities;
 
 import br.ucs.caxiaslixozero.Domain.Enums.ResidueType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,10 +14,13 @@ import lombok.NoArgsConstructor;
 public class Residue {
 	
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 	private ResidueType residueType;
-    private String nome;
-    private String descricao;
-    private String descarte;
-    private byte[] imagem;
+    private String name;
+    private String description;
+    private String disposeText;
+    private byte[] image;
+//    @ManyToMany(mappedBy = "residues")
+//    private Collection<Ecopoint> ecopoints;
 }

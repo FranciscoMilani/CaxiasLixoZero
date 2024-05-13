@@ -4,19 +4,21 @@ import br.ucs.caxiaslixozero.Domain.Dtos.EcopointMapDto;
 import br.ucs.caxiaslixozero.Domain.Entities.Neighborhood;
 import br.ucs.caxiaslixozero.Services.Ecopoints.EcopointServices;
 import br.ucs.caxiaslixozero.Services.ResidueService;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.nio.file.Files;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.Reader;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-@Controller
+//@Controller
+@RestController
 @AllArgsConstructor
 @RequestMapping("/{mapa}")
 public class EcopointsMapController {
@@ -28,19 +30,24 @@ public class EcopointsMapController {
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("neighborhoods", Neighborhood.neighborhoodList);
-        mv.addObject("residueTypes", Arrays.asList("vidro", "borracha", "óleo"));
+        mv.addObject("residueTypes", Arrays.asList("Vidro", "Óleo"));
 
-        // só teste, vou tirar daqui
         try {
-            Path path = Path.of(getClass()
+             var path = Path.of(getClass()
                     .getClassLoader()
-                    .getResource("keys.txt")
-                    .toURI()
-            );
+                    .getResource("keys.json")
+                     .toURI());
 
-            mv.addObject("key", Files.readString(path));
+            Reader reader = new BufferedReader(new FileReader(path.toString()));
+            JsonObject object = JsonParser.parseReader(reader).getAsJsonObject();
+
+            String mapKey = object.get("maps").getAsString();
+            String geoKey = object.get("geo").getAsString();
+
+            mv.addObject("key", mapKey);
+            mv.addObject("geoKey", geoKey);
         } catch (Exception e) {
-            throw new RuntimeException();
+            e.printStackTrace();
         }
 
         mv.setViewName("mapainterativo");
@@ -49,7 +56,31 @@ public class EcopointsMapController {
 
     @GetMapping("/listaecopontos")
     @ResponseBody
-    public List<EcopointMapDto> getEcopoints(){
+    public List<EcopointMapDto> getEcopoints() {
+        System.out.println(ecopointServices.getAllToMapEcopoint().get(0));
         return ecopointServices.getAllToMapEcopoint();
+        /*
+        list.add(new EcopointMapDto(
+                "Teste 2",
+                "912345678",
+                "email@ucs.br",
+                new EcopointAddressDto("Rua Santos Dumont", "1285", "Exposicao"),
+                "8:00",
+                "18:00",
+                Arrays.asList("Resíduo X", "Resíduo Y", "Resíduo Z"))
+        );
+
+        return list;
+        */
     }
+
+    @GetMapping("/")
+    @ResponseBody
+    public List<EcopointMapDto> getEcopointsFiltered(@RequestParam String neighborhoodDes,
+                                                     @RequestParam String residueType) {
+
+        return ecopointServices.getMapEcopointFilteredByNeighborhood(neighborhoodDes);
+
+    }
+
 }
