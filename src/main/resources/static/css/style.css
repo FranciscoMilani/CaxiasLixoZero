@@ -49,3 +49,57 @@ body {
     font-family: Arial, sans-serif;
     font-size: 14px;
 }
+
+/* INDEX */
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
+.ecopoints-section, .recyclopedia-section, .contribute-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 2rem;
+}
+
+.background {
+    width: 100%;
+    background-color: #dce6ec;
+}
+
+.ecopoints-section h2, .recyclopedia-section h2, .contribute-section h2 {
+    margin-bottom: 1rem;
+}
+
+button, a.btn {
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.container-fluid .col-md-6 img {
+    display: block;
+}
+
+.col-md-6 img {
+	width: 50%;
+	margin: auto;
+}
+
+.row{
+	width: 73%;
+	margin: auto;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.buttonContribuir{
+	margin: auto;
+}
+
+/* FIM INDEX */

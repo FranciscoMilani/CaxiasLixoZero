@@ -4,13 +4,70 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Índice</title>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <link th:href="@{css/style.css}" rel="stylesheet" type="text/css">
+    
+    <link rel="icon" type="image/x-icon" th:href="@{/images/faviconCLZ.png}">
 </head>
 <body layout:fragment="body">
     <main>
-        <section id="secaoBanner"></section>
-        <section id="secaoMapa"></section>
-        <section id="secaoEcoponto"></section>
+    	<!-- Banner -->
+	    <section class="banner">
+	        <img th:src="@{/images/bannerCLZ.png}" alt="Banner" class="img-fluid w-100">
+	    </section>
+	    
+	     <!-- Mapa -->
+	    <section class="container-fluid">
+	        <div class="row">
+	            <div class="col-md-6 text-center">
+	                <div class="ecopoints-section">
+	                    <h2>Encontre ecopontos pertinhos da sua casa!</h2>
+	                    <a th:href="@{mapainterativo}" class="btn btn-primary">Ver mapa</a>
+	                </div>
+	            </div>
+	            <div class="col-md-6">
+	                <img th:src="@{/images/mapaCLZ.png}" alt="Ecopontos" class="img-fluid">
+	            </div>
+	        </div>
+	    </section>
+	    
+	    <!-- Reciclopédia -->
+	    <section class="background container-fluid">
+	        <div class="row">
+	            <div class="col-md-6">
+	                <img th:src="@{/images/reciclopediaCLZ.png}" alt="Reciclopédia" class="img-fluid">
+	            </div>
+	            <div class="col-md-6 text-center">
+	                <div class="recyclopedia-section">
+	                    <h2>Reciclopédia</h2>
+	                    <p>Conheça os principais resíduos produzidos pelos seres humanos e descubra como descartá-los corretamente.</p>
+	                    <a th:href="@{reciclopedia}" class="btn btn-primary">Quero aprender</a>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	    
+	    <!-- Ecoponto -->
+	    <section class="container-fluid">
+	        <div class="row">
+	            <div class="col-md-6 text-center">
+	                <div class="contribute-section">
+	                    <h2>Torne-se um ecoponto e faça parte da causa</h2>
+	                </div>
+	            </div>
+	            <div class="buttonContribuir col-md-6 contribute-section">
+	                <a th:href="@{registerEcopoint}" class="btn btn-primary">Quero contribuir</a>
+	            </div>
+	        </div>
+	    </section>	    
     </main>
 </body>
 </html>
