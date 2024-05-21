@@ -32,18 +32,57 @@
 				<td th:text="${ecopoint.responsibleName}"></td>
 				<td th:text="${ecopoint.responsiblePhone}"></td>
 				<td th:text="${ecopoint.socialNetwork}"></td>
-				<td><button type="button" class="btn">
-						<i class="fas fa-search"></i>
+				<td><button class="btn btn-primary" th:attr="data-endereco=${'Rua ' + ecopoint.ecopointAddress.road + 
+							', número ' + ecopoint.ecopointAddress.number + ', bairro ' + ecopoint.ecopointAddress.neighborhood}" 
+							onclick="openModalAddress(this.getAttribute('data-endereco'))">
+							<i class="fas fa-search"></i>
 					</button></td>
-				<td><button type="button" class="btn">
-						<i class="fas fa-search"></i>
-					</button></td>
+				<td>
+				    <button class="btn btn-primary" th:attr="data-residues=${ecopoint.residueType}" 
+				            onclick="openResidueModal(this.getAttribute('data-residues'))">
+				        <i class="fas fa-search"></i>
+				    </button>
+				</td>
 				<td><button type="button" class="btn-aprovar" th:attr="data-id=${ecopoint.id}">
                         <i class="fas fa-check"></i>
                     </button></td>
 			</tr>
 		</tbody>
 	</table>
+	
+	<div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="addressModalLabel">Endereço</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+	      </div>
+	      <div class="modal-body">
+				<p id="enderecoModalContent"></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="residueModal" tabindex="-1" aria-labelledby="residueModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="residueModalLabel">Resíduos</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <ul id="residueList"></ul>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<script>
 	document.querySelectorAll('.btn-aprovar').forEach(btn => {
@@ -72,5 +111,34 @@
 	    });
 	});
     </script>
+    
+    <script>
+	  	function openModalAddress(address) {
+		    document.getElementById('enderecoModalContent').innerText = address;
+		    var modal = new bootstrap.Modal(document.getElementById('addressModal'));
+		    modal.show();
+  		}
+	</script>
+	
+	<script>
+	function openResidueModal(residues) {
+	    var residueList = document.getElementById("residueList");
+	    residueList.innerHTML = ""; // Limpa a lista de resíduos antes de adicionar os novos
+
+	    // Separa a string de resíduos em uma lista
+	    var residueArray = residues.split(',');
+
+	    // Adiciona cada resíduo à lista
+	    residueArray.forEach(function(residue) {
+	        var listItem = document.createElement("li");
+	        listItem.textContent = residue.trim(); // Remove espaços em branco extras
+	        residueList.appendChild(listItem);
+	    });
+
+	    // Abre o modal
+	    var myModal = new bootstrap.Modal(document.getElementById('residueModal'));
+	    myModal.show();
+	}
+	</script>
 </body>
 </html>

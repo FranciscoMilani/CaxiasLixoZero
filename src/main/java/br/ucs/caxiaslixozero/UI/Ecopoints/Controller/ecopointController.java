@@ -66,6 +66,6 @@ public class ecopointController {
 		ec.setIsApproved(Boolean.TRUE);
 		this.ecopointServices.updateEcopoint(ec);
 	    
-	    return ResponseEntity.ok("Ecopoint aprovado com sucesso! ID: " + id);
+	    return ResponseEntity.ok("Ecopoint aprovado com sucesso! empresa: " + ec.getCompanyName());
 	}
 }
