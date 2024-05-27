@@ -11,6 +11,7 @@ import br.ucs.caxiaslixozero.Domain.Entities.Ecopoint;
 import jakarta.persistence.EntityManager;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class EcopointServices {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Transactional // Anotação movida para o método
 	public Address saveAddress(Address address) {
 		try {
@@ -50,36 +51,42 @@ public class EcopointServices {
 		return address;
 	}
 
-	public List<Ecopoint> getAllEcopoints(){
+	public List<Ecopoint> getAllEcopoints() {
 		return repository.findAll();
 	}
-	
-	public Ecopoint findEcopointById(Long id){
+
+	public Ecopoint findEcopointById(Long id) {
 		Optional<Ecopoint> ecopointOptional = repository.findById(id);
-	    return ecopointOptional.orElse(null);
+		return ecopointOptional.orElse(null);
 	}
 
-    public List<EcopointMapDto> getAllToMapEcopoint() {
-        return repository
-                .findAll()
-                .stream()
-                .map(EcopointMapper.INSTANCE::toEcopointMapDto)
-                .toList();
-    }
+	public List<EcopointMapDto> getAllToMapEcopoint() {
+		return repository.findAll().stream().map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
+	}
 
-    public List<EcopointMapDto> getMapEcopointsFilteredByResidue(String residueType) {
-        return repository
-                .findFirst10ByResidueTypeIn(List.of(residueType))
-                .stream()
-                .map(EcopointMapper.INSTANCE::toEcopointMapDto)
-                .toList();
-    }
+	public List<EcopointMapDto> getMapEcopointsFilteredByResidue(String residueType) {
+		return repository.findFirst10ByResidueTypeIn(List.of(residueType)).stream()
+				.map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
+	}
 
-    public List<EcopointMapDto> getMapEcopointFilteredByNeighborhood(String neighborhood) {
-        return repository
-                .findByNeighborhoodName(neighborhood)
-                .stream()
-                .map(EcopointMapper.INSTANCE::toEcopointMapDto)
-                .toList();
-    }
+	public List<EcopointMapDto> getMapEcopointFilteredByNeighborhood(String neighborhood) {
+		return repository.findByNeighborhoodName(neighborhood).stream().map(EcopointMapper.INSTANCE::toEcopointMapDto)
+				.toList();
+	}
+
+	public List<Ecopoint> getEcopointsByCompanyName(String companyName) {
+		return repository.findByCompanyName(companyName);
+	}
+
+	public List<Ecopoint> getEcopointsByResponsibleName(String responsibleName) {
+		return repository.findByResponsibleName(responsibleName);
+	}
+
+	public List<Ecopoint> getEcopointsBySocialNetwork(String socialNetwork) {
+		return repository.findBySocialNetwork(socialNetwork);
+	}
+	
+	public List<Ecopoint> getEcopointsBySolicitationDate(Date solicitationDate) {
+		return repository.findBySolicitationDate(solicitationDate);
+	}
 }

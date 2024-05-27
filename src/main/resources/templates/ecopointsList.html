@@ -9,6 +9,27 @@
 </head>
 
 <body layout:fragment="body">
+	<form action="/ecopointsFilter" method="post" class="row justify-content-center">
+	    <div class="col-lg-6">
+	        <div class="select-container">
+	            <label for="companyName" class="form-label">Empresa:</label>
+	            <input type="text" class="form-control" id="companyName" name="companyName"/>
+	            <label for="responsibleName" class="form-label">Responsável:</label>
+	            <input type="text" class="form-control" id="responsibleName" name="responsibleName"/>
+	        </div>
+	    </div>
+	    
+	    <div class="col-lg-6">
+	        <div class="select-container">
+	            <label for="socialNetwork" class="form-label">Rede Social:</label>
+	            <input type="text" class="form-control" id="socialNetwork" name="socialNetwork"/>
+	            
+	            <label for="solicitationDate" class="form-label">Data Solic.</label>
+	            <input type="date" class="form-control" id="solicitationDate" name="solicitationDate"/>
+	            <button type="submit" class="btn btn-primary">Buscar</button>
+	        </div>
+	    </div>
+	</form>
 	<table class="tableEcopoints" border="1">
 		<thead>
 			<tr>
