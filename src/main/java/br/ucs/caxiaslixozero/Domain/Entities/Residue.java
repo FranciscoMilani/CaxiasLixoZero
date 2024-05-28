@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +24,6 @@ public class Residue {
     private String description;
     private String disposeText;
     private byte[] image;
-//    @ManyToMany(mappedBy = "residues")
-//    private Collection<Ecopoint> ecopoints;
+    @ManyToMany(mappedBy = "residues")
+    private List<Ecopoint> ecopoints;
 }

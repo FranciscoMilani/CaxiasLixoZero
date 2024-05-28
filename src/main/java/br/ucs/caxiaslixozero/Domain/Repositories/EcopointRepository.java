@@ -10,9 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface EcopointRepository extends JpaRepository<Ecopoint, Long> {
-	List<Ecopoint> findFirst10ByResidueTypeIn(Collection<String> residueType);
-
-	List<Ecopoint> findFirst10ByResidueType(String residueType);
+//    List<Ecopoint> findFirst10ByResidueTypeIn(Collection<String> residueType);
+//
+//    List<Ecopoint> findFirst10ByResidueType(String residueType);
 
 	@Query("SELECT e FROM Ecopoint e WHERE e.ecopointAddress.neighborhood LIKE %:neighborhood%")
 	List<Ecopoint> findByNeighborhoodName(@Param("neighborhood") String neighborhood);
@@ -25,7 +25,7 @@ public interface EcopointRepository extends JpaRepository<Ecopoint, Long> {
 
 	@Query("SELECT e FROM Ecopoint e WHERE e.socialNetwork LIKE %:social%")
     List<Ecopoint> findBySocialNetwork(@Param("social") String socialNetwork);
-	
+
 	@Query("SELECT e FROM Ecopoint e WHERE e.solicitationDate = :date")
     List<Ecopoint> findBySolicitationDate(@Param("date") Date solicitationDate);
 

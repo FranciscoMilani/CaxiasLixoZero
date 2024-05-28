@@ -7,17 +7,14 @@ body {
 }
 
 /*  FOOTER  */
-
 body {
     min-height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
-
 /*  -----  */
 
 /*  MAP  */
-
 #mapHeader > select {
     width: 33%;
 }
@@ -48,6 +45,12 @@ body {
  .tableEcopoints {
     font-family: Arial, sans-serif;
     font-size: 14px;
+}
+
+ /* CADASTRO */
+
+fieldset {
+    margin-top: 35px;
 }
 
 /* INDEX */
