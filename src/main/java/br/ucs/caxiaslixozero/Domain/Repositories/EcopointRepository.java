@@ -17,17 +17,24 @@ public interface EcopointRepository extends JpaRepository<Ecopoint, Long> {
 	@Query("SELECT e FROM Ecopoint e WHERE e.ecopointAddress.neighborhood LIKE %:neighborhood%")
 	List<Ecopoint> findByNeighborhoodName(@Param("neighborhood") String neighborhood);
 
-	@Query("SELECT e FROM Ecopoint e WHERE e.companyName LIKE %:company%")
-	List<Ecopoint> findByCompanyName(@Param("company") String companyName);
+	@Query("SELECT e FROM Ecopoint e WHERE e.companyName LIKE %:company% AND " +
+		       "(:approved IS NULL OR e.isApproved = :approved)")
+	List<Ecopoint> findByCompanyName(@Param("company") String companyName, @Param("approved") Boolean isApproved);
 
-	@Query("SELECT e FROM Ecopoint e WHERE e.responsibleName LIKE %:responsible%")
-	List<Ecopoint> findByResponsibleName(@Param("responsible") String responsibleName);
+	@Query("SELECT e FROM Ecopoint e WHERE e.responsibleName LIKE %:responsible% AND"
+			+ "(:approved IS NULL OR e.isApproved = :approved)")
+	List<Ecopoint> findByResponsibleName(@Param("responsible") String responsibleName, @Param("approved") Boolean isApproved);
 
-	@Query("SELECT e FROM Ecopoint e WHERE e.socialNetwork LIKE %:social%")
-    List<Ecopoint> findBySocialNetwork(@Param("social") String socialNetwork);
+	@Query("SELECT e FROM Ecopoint e WHERE e.socialNetwork LIKE %:social% AND"
+			+ "(:approved IS NULL OR e.isApproved = :approved)")
+	List<Ecopoint> findBySocialNetwork(@Param("social") String socialNetwork, @Param("approved") Boolean isApproved);
+
+	@Query("SELECT e FROM Ecopoint e WHERE e.solicitationDate = :date AND"
+			+ "(:approved IS NULL OR e.isApproved = :approved)")
+	List<Ecopoint> findBySolicitationDate(@Param("date") Date solicitationDate, @Param("approved") Boolean isApproved);
 	
-	@Query("SELECT e FROM Ecopoint e WHERE e.solicitationDate = :date")
-    List<Ecopoint> findBySolicitationDate(@Param("date") Date solicitationDate);
+	@Query("SELECT e FROM Ecopoint e WHERE (:approved IS NULL AND e.isApproved IS NULL) OR e.isApproved = :approved")
+	List<Ecopoint> findByStatus(@Param("approved") Boolean isApproved);
 
-    //List<Ecopoint> findFirst10ByResidueId(Long residueId);
+	// List<Ecopoint> findFirst10ByResidueId(Long residueId);
 }

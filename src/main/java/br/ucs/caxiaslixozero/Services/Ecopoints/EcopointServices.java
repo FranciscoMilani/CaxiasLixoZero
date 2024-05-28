@@ -74,19 +74,23 @@ public class EcopointServices {
 				.toList();
 	}
 
-	public List<Ecopoint> getEcopointsByCompanyName(String companyName) {
-		return repository.findByCompanyName(companyName);
+	public List<Ecopoint> getEcopointsByCompanyName(String companyName, Boolean isApproved) {
+		return repository.findByCompanyName(companyName, isApproved);
 	}
 
-	public List<Ecopoint> getEcopointsByResponsibleName(String responsibleName) {
-		return repository.findByResponsibleName(responsibleName);
+	public List<Ecopoint> getEcopointsByResponsibleName(String responsibleName,  Boolean isApproved) {
+		return repository.findByResponsibleName(responsibleName, isApproved);
 	}
 
-	public List<Ecopoint> getEcopointsBySocialNetwork(String socialNetwork) {
-		return repository.findBySocialNetwork(socialNetwork);
+	public List<Ecopoint> getEcopointsBySocialNetwork(String socialNetwork,  Boolean isApproved) {
+		return repository.findBySocialNetwork(socialNetwork, isApproved);
 	}
 	
-	public List<Ecopoint> getEcopointsBySolicitationDate(Date solicitationDate) {
-		return repository.findBySolicitationDate(solicitationDate);
+	public List<Ecopoint> getEcopointsBySolicitationDate(Date solicitationDate,  Boolean isApproved) {
+		return repository.findBySolicitationDate(solicitationDate, isApproved);
+	}
+	
+	public List<Ecopoint> getEcopointsUnderAnalysis(Boolean isApproved) {
+		return repository.findByStatus(isApproved);
 	}
 }

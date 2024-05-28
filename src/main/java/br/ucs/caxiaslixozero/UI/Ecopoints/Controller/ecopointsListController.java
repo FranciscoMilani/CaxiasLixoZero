@@ -23,7 +23,7 @@ public class ecopointsListController {
 	@GetMapping("/ecopointsList")
 	public ModelAndView registerEcopoint() {
 		ModelAndView mv = new ModelAndView("ecopointsList");
-		List<Ecopoint> ecopoints = ecopointServices.getAllEcopoints();
+		List<Ecopoint> ecopoints = ecopointServices.getEcopointsUnderAnalysis(null);
 		mv.addObject("ecopoints", ecopoints);
 		return mv;
 	}
@@ -32,20 +32,27 @@ public class ecopointsListController {
 	public ModelAndView searchEcopoint(@RequestParam(value = "companyName", required = false) String companyName,
 			@RequestParam(value = "responsibleName", required = false) String responsibleName,
 			@RequestParam(value = "socialNetwork", required = false) String socialNetwork,
-			@RequestParam(value = "solicitationDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date solicitationDate) {
+			@RequestParam(value = "solicitationDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date solicitationDate,
+			@RequestParam(value = "statusSelect", required = false) String statusSelect) {
 
 		ModelAndView mv = new ModelAndView("ecopointsList");
+		Boolean isApproved = null;
+		if(statusSelect.equals("aprovados")) {
+			isApproved = Boolean.TRUE;
+		}else if(statusSelect.equals("reprovados")) {
+			isApproved = Boolean.FALSE;
+		}
 
 		if (companyName != null && !companyName.equals("")) {
-			mv.addObject("ecopoints", ecopointServices.getEcopointsByCompanyName(companyName));
+			mv.addObject("ecopoints", ecopointServices.getEcopointsByCompanyName(companyName, isApproved));
 		} else if (responsibleName != null && !responsibleName.equals("")) {
-			mv.addObject("ecopoints", ecopointServices.getEcopointsByResponsibleName(responsibleName));
+			mv.addObject("ecopoints", ecopointServices.getEcopointsByResponsibleName(responsibleName, isApproved));
 		} else if (socialNetwork != null && !socialNetwork.equals("")) {
-			mv.addObject("ecopoints", ecopointServices.getEcopointsBySocialNetwork(socialNetwork));
+			mv.addObject("ecopoints", ecopointServices.getEcopointsBySocialNetwork(socialNetwork, isApproved));
 		} else if (solicitationDate != null) {
-			mv.addObject("ecopoints", ecopointServices.getEcopointsBySolicitationDate(solicitationDate));
+			mv.addObject("ecopoints", ecopointServices.getEcopointsBySolicitationDate(solicitationDate, isApproved));
 		} else {
-			mv.addObject("ecopoints", ecopointServices.getAllEcopoints());
+			mv.addObject("ecopoints", ecopointServices.getEcopointsUnderAnalysis(isApproved));
 		}
 		return mv;
 	}

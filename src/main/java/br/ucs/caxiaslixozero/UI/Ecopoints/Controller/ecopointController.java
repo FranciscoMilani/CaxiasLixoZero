@@ -46,7 +46,7 @@ public class ecopointController {
 		address = this.ecopointServices.saveAddress(address);
 		ecopoint.setEcopointAddress(address);
 		ecopoint.setSolicitationDate(new Date());
-		ecopoint.setIsApproved(Boolean.FALSE);
+		ecopoint.setIsApproved(null);
 		this.ecopointServices.saveEcopoint(ecopoint);
 		mv.addAttribute("aviso", "Ecoponto salvo!");
 		return "registerEcopoint";
@@ -62,8 +62,15 @@ public class ecopointController {
 	@ResponseBody
 	public ResponseEntity<String> approveEcopoint(@RequestBody Map<String, String> requestBody) {
 		String id = requestBody.get("id");
+		String action = requestBody.get("action");
+		
 		Ecopoint ec = ecopointServices.findEcopointById(Long.parseLong(id));
-		ec.setIsApproved(Boolean.TRUE);
+		if(action.equals("aprovar")) {
+			ec.setIsApproved(Boolean.TRUE);
+		}else {
+			ec.setIsApproved(Boolean.FALSE);
+		}
+		
 		this.ecopointServices.updateEcopoint(ec);
 	    
 	    return ResponseEntity.ok("Ecopoint aprovado com sucesso! empresa: " + ec.getCompanyName());

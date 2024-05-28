@@ -10,26 +10,45 @@
 
 <body layout:fragment="body">
 	<form action="/ecopointsFilter" method="post" class="row justify-content-center">
-	    <div class="col-lg-6">
+	    <div class="col-lg-2">
 	        <div class="select-container">
 	            <label for="companyName" class="form-label">Empresa:</label>
 	            <input type="text" class="form-control" id="companyName" name="companyName"/>
+	        </div>
+	    </div>
+	    <div class="col-lg-2">
+	        <div class="select-container">
 	            <label for="responsibleName" class="form-label">Responsável:</label>
 	            <input type="text" class="form-control" id="responsibleName" name="responsibleName"/>
 	        </div>
 	    </div>
-	    
-	    <div class="col-lg-6">
+	    <div class="col-lg-2">
 	        <div class="select-container">
 	            <label for="socialNetwork" class="form-label">Rede Social:</label>
 	            <input type="text" class="form-control" id="socialNetwork" name="socialNetwork"/>
-	            
+	        </div>
+	    </div>	
+	    <div class="col-lg-2">
+	        <div class="select-container">
 	            <label for="solicitationDate" class="form-label">Data Solic.</label>
 	            <input type="date" class="form-control" id="solicitationDate" name="solicitationDate"/>
-	            <button type="submit" class="btn btn-primary">Buscar</button>
 	        </div>
 	    </div>
+	    <div class="col-lg-2">
+	        <div class="select-container">
+	            <label for="statusSelect" class="form-label">Status</label>
+	            <select class="form-select" id="statusSelect" name="statusSelect">
+	                <option value="emAnalise">Em Análise</option>
+	                <option value="aprovados">Aprovados</option>
+	                <option value="reprovados">Reprovados</option>
+	            </select>
+	        </div>
+	    </div>
+	    <div class="col-lg-2">
+	        <button type="submit" class="btn btn-primary" style="margin-top: 2.5rem;">Buscar</button>
+	    </div>
 	</form>
+	
 	<table class="tableEcopoints" border="1">
 		<thead>
 			<tr>
@@ -42,6 +61,7 @@
 				<th>Endereço</th>
 				<th>Resíduos</th>
 				<th>Aprovar</th>
+				<th>Reprovar</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -66,6 +86,9 @@
 				</td>
 				<td><button type="button" class="btn-aprovar" th:attr="data-id=${ecopoint.id}">
                         <i class="fas fa-check"></i>
+                    </button></td>
+                    <td><button type="button" class="btn-reprovar" th:attr="data-id=${ecopoint.id}">
+                        <i class="fas fa-close"></i>
                     </button></td>
 			</tr>
 		</tbody>
@@ -106,33 +129,31 @@
 	</div>
 
 	<script>
-	document.querySelectorAll('.btn-aprovar').forEach(btn => {
-	    btn.addEventListener('click', function() {
-	        var id = btn.getAttribute('data-id');
-	        fetch('/ecopointsList', {
-	            method: 'POST',
-	            headers: {
-	                'Content-Type': 'application/json',
-	            },
-	            body: JSON.stringify({ id: id }),
-	        })
-	        .then(response => {
-	            if (response.ok) {
-	                return response.text();
-	            }
-	            throw new Error('Erro ao processar a solicitação');
-	        })
-	        .then(data => {
-	            alert(data);
-	        })
-	        .catch(error => {
-	            console.error('Erro ao enviar requisição:', error);
-	            alert('Erro ao processar a solicitação');
+	    document.querySelectorAll('.btn-aprovar, .btn-reprovar').forEach(btn => {
+	        btn.addEventListener('click', function() {
+	            var id = btn.getAttribute('data-id');
+	            var action = btn.classList.contains('btn-aprovar') ? 'aprovar' : 'reprovar'; // Verifica se é um botão de aprovar ou reprovar
+	            fetch('/ecopointsList', {
+	                method: 'POST',
+	                headers: {
+	                    'Content-Type': 'application/json',
+	                },
+	                body: JSON.stringify({ id: id, action: action }), // Passa a ação (aprovar ou reprovar) no corpo da requisição
+	            })
+	            .then(response => {
+	                if (response.ok) {
+	                    window.location.reload(); // Recarrega a página após o POST
+	                } else {
+	                    throw new Error('Erro ao processar a solicitação');
+	                }
+	            })
+	            .catch(error => {
+	                console.error('Erro ao enviar requisição:', error);
+	                alert('Erro ao processar a solicitação');
+	            });
 	        });
 	    });
-	});
-    </script>
-    
+	</script>
     <script>
 	  	function openModalAddress(address) {
 		    document.getElementById('enderecoModalContent').innerText = address;
