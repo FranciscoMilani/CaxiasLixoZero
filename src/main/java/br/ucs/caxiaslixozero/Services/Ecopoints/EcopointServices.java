@@ -64,10 +64,10 @@ public class EcopointServices {
 		return repository.findAll().stream().map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
 	}
 
-	public List<EcopointMapDto> getMapEcopointsFilteredByResidue(String residueType) {
-		return repository.findFirst10ByResidueTypeIn(List.of(residueType)).stream()
-				.map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
-	}
+//	public List<EcopointMapDto> getMapEcopointsFilteredByResidue(String residueType) {
+//		return repository.findFirst10ByResidueTypeIn(List.of(residueType)).stream()
+//				.map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
+//	}
 
 	public List<EcopointMapDto> getMapEcopointFilteredByNeighborhood(String neighborhood) {
 		return repository.findByNeighborhoodName(neighborhood).stream().map(EcopointMapper.INSTANCE::toEcopointMapDto)

@@ -9,40 +9,71 @@
 <body layout:fragment="body">
 	<main>
 		<section class="container-fluid d-flex justify-content-center" style="max-width: 500px;">
-			<form action="/registerEcopoint" th:object="${ecopoint}" method="post">
+			<form id="ecopointForm" action="/registerEcopoint" th:object="${ecopoint}" method="post">
+				<fieldset>
+					<legend>Informações</legend>
 					<label for="inputEmail1" class="form-label">E-mail</label>
 					<input type="email" class="form-control" id="inputEmail1" name="email"/>
-					
+
 					<label for="inputNome" class="form-label">Nome da Empresa / Instituição / Estabelecimento</label>
 					<input type="text" class="form-control" id="inputNome" name="companyName"/>
-					
+
 					<label for="inputResponsavel" class="form-label">Responsável pelo cadastro (nome)</label>
 					<input type="text" class="form-control" id="inputResponsavel" name="responsibleName"/>
-					
+
 					<label for="inputEmail1Resp" class="form-label">E-mail ou WhatsApp (preferível) do responsável pelo cadastro</label>
 					<input type="text" class="form-control" id="inputEmail1Resp" name="responsiblePhone"/>
-					
+
 					<label for="inputRedeSocial" class="form-label">Redes sociais do local (se houver)</label>
 					<input type="text" class="form-control" id="inputRedeSocial" name="socialNetwork"/>
-					
+				</fieldset>
+
+				<fieldset>
+					<legend>Horários de acesso</legend>
+					<div class="d-flex flex-row justify-content-around">
+						<div class="w-35">
+							<label for="inputAbertura" class="form-label">Horário abertura</label>
+							<input type="time" class="form-control" id="inputAbertura" name="openingTime"/>
+						</div>
+						<div class="w-35">
+							<label for="inputFechamento" class="form-label">Horário fechamento</label>
+							<input type="time" class="form-control" id="inputFechamento" name="closingTime"/>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset id="enderecoFieldset">
+					<legend>Endereço</legend>
+					<label for="inputCep" class="form-label">CEP</label>
+					<input type="text" class="form-control" id="inputCep" name="cep" maxlength="8" required/>  <!-- pattern="\d{5}-?\d{3}"-->
+					<div id="cepFeedback" class="invalid-feedback">Insira um CEP válido</div>
+
 					<label for="inputRua" class="form-label">Rua</label>
-					<input type="text" class="form-control" id="inputRua" name="road"/>
-					
+					<input type="text" class="form-control" id="inputRua" name="road" required/>
+
+					<label for="selectBairro" class="form-label">Bairro</label>
+					<select class="selectBairro form-select" id="selectBairro" name="neighborhood" required>
+						<option value="0">Selecione</option>
+						<option th:each="val, iter : ${neighborhoods}" th:value="${val}" th:text="${val}"></option>
+					</select>
+
 					<label for="inputNumero" class="form-label">Número</label>
-					<input type="number" class="form-control" id="inputNumero" name="number"/>
-					
+					<input type="number" class="form-control" id="inputNumero" name="number" required/>
+
 					<label for="inputComplemento" class="form-label">Complemento</label>
 					<input type="text" class="form-control" id="inputComplemento" name="addOn"/>
-					
-					<label for="inputBairro" class="form-label">Bairro</label>
-					<input type="text" class="form-control" id="inputBairro" name="neighborhood"/>
-					
-					<br/>
+
+					<input type="hidden" id="latitude" name="latitude" value="">
+					<input type="hidden" id="longitude" name="longitude" value="">
+				</fieldset>
+
+				<br/>
+				<fieldset>
 					<p>Tipo de resíduo que o Ecoponto vai receber (selecionar um ou mais!)</p>
 					<div class="form-check">
 					<label th:each="opcao : ${opcoes}">
-			            <input class="form-check-input" type="checkbox" name="residueType" th:value="${opcao}" />
-			            <span th:text="${opcao}"></span>
+			            <input class="form-check-input" type="checkbox" th:data-id="${opcao.id}" th:value="${opcao.id}" name="selectedResidues"/>
+			            <span th:text="${opcao.description}"></span>
 			            <br/>
 			        </label>
 			        </div>
@@ -55,12 +86,116 @@
 			 		<div class="form-check">
 	        			<input class="form-check-input" type="radio" th:field="*{isPublic}" value="false"/> Não
 					</div>
-					<br/><br/>
-					<center>
-						<button type="submit" class="btn btn-primary">Enviar</button>
-					</center>
+				</fieldset>
+				<br/><br/>
+				<center>
+					<button type="submit" class="btn btn-primary">Enviar</button>
+				</center>
 			</form>
 		</section>
 	</main>
+
+	<script th:inline="javascript" > var geoAPIKey = /*[[${geoKey}]]*/;</script>
+	<script>
+		$(document).ready(function() {
+			$("#inputCep").on("keyup blur", function () {
+				getAddressByCEP($(this));
+			})
+
+			function getAddressByCEP(el) {
+				const CEP_LENGTH = 8;
+				let cep = el.val();
+
+				if (cep === "") {
+					$("#inputCep").removeClass("is-invalid");
+					updateAddressFieldsFail();
+					return;
+				}
+
+				if (cep.length < CEP_LENGTH || isNaN(cep)) {
+					showCepFeedback();
+					updateAddressFieldsFail();
+					return;
+				}
+
+				if (cep.length == CEP_LENGTH) {
+					cep = parseInt(cep);
+					$.get(`https://viacep.com.br/ws/${cep}/json/`).done(function (data) {
+						if (data.erro) {
+							showCepFeedback();
+							updateAddressFieldsFail();
+							return;
+						}
+						if (data.localidade != "Caxias do Sul") {
+							showCepFeedback("CEP não pertence à Caxias do Sul");
+							updateAddressFieldsFail();
+							return;
+						}
+
+						handleValidAddress(data);
+					}).fail(function (data) {
+						console.log("Falha na requisição de endereço: " + data)
+					})
+				}
+			}
+			function showCepFeedback(error = "Insira um CEP válido") {
+				$("#cepFeedback").html(error)
+				$("#inputCep").addClass("is-invalid");
+			}
+
+			function updateAddressFieldsFail() {
+				$("#enderecoFieldset #inputRua, #selectBairro").each(function (){
+					$(this).val("");
+					$(this).prop("readonly", false);
+				})
+			}
+
+			function handleValidAddress(data) {
+				$("#inputCep").removeClass("is-invalid");
+				$("#enderecoFieldset #inputRua, #selectBairro").each((i, el) => {
+					$(el).prop("readonly", true);
+				})
+
+				$("#inputRua").val(data.logradouro);
+				$("#selectBairro").val(data.bairro);
+			}
+
+			$("#ecopointForm").on("submit", function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+
+				const address = {
+					cep: $("#inputCep").val().slice(0, 5) + '-' + $("#inputCep").val().slice(5),
+					street: $("#inputRua").val(),
+					number: $("#inputNumero").val(),
+					neighborhood: $("#selectBairro").val(),
+				}
+
+				// Montando a request do geocoding para encontrar localização com maior precisão
+				const encodedAddress = encodeURI(`${address.street},  ${address.number} - ${address.neighborhood}`);
+				const encodedCityBounds = '-29.255083,-51.054035%7C-29.073405,-51.315991';
+				const components = `postal_code:${address.cep}|locality:Caxias+do+Sul|administrative_area:RS|country:BR`;
+				const params = `json?address=${encodedAddress}&bounds=${encodedCityBounds}&components=${components}&key=${geoAPIKey}`;
+
+				if (encodedAddress && encodedAddress !== '') {
+					$.get(`https://maps.googleapis.com/maps/api/geocode/${params}`, (data) => {
+						if (data.status === "OK") {
+							let results = data.results[0].geometry.location;
+							if (results) {
+								$("#latitude").val(results.lat)
+								$("#longitude").val(results.lng)
+								$(this).off('submit').submit();
+							}
+						} else {
+							console.error("Erro ao retornar localização do endereço. STATUS: " + data.status);
+						}
+					})
+					.fail(function(error) {
+						console.error("Falha ao retornar localização do endereço: ", error);
+					});
+				}
+			});
+		});
+	</script>
 </body>
 </html>

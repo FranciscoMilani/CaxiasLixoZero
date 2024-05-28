@@ -1,53 +1,25 @@
+import MapFilter from './EcopointMapFilters.js';
+
 $(document).ready(function () {
     let map;
 
     async function initMap() {
-
         const {InfoWindow, Map} = await google.maps.importLibrary("maps");
         const {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
         const {Geocoder, GeocoderRequest} = await google.maps.importLibrary("geocoding")
-
+        const {PinElement} = await google.maps.importLibrary("marker");
         const MARKERS = [];
-
-        window.MARKERS = MARKERS;
-
         const infoWindow = new InfoWindow({
             minWidth: 250,
             maxWidth: 500
         });
 
+        window.MARKERS = MARKERS;
         handlePermission();
-
-        async function getLatLngFromAddress(address) {
-            return new Promise((resolve, reject) => {
-                if (address) {
-                    const rawAddress = `${address.street},  ${address.number} - ${address.neighborhood}`;
-                    const mimeType = "json";
-                    const encodedAddress = encodeURI(rawAddress);
-                    const params = `${mimeType}?address=${encodedAddress}&key=${geoAPIKey}`;
-
-                    if (encodedAddress && encodedAddress !== '') {
-                        const geoUrl = `https://maps.googleapis.com/maps/api/geocode/${params}`;
-
-                        $.get(geoUrl, (data) => {
-                            if (data.status == "OK") {
-                                let results = data.results[0];
-                                resolve(results.geometry.location);
-                            } else {
-                                reject(data.status)
-                            }
-                        })
-                        .fail(function () {
-                            reject(null);
-                        });
-                    }
-                }
-            });
-        }
 
         function populateInfoWindow(ecopoint) {
             const address = ecopoint.address;
-            console.log(ecopoint)
+
             return `
                 <div class="container d-flex flex-column">
                     <div>
@@ -61,26 +33,19 @@ $(document).ready(function () {
                     </div>
                     <div>
                         <ul>
-                             ${(ecopoint.residues || [`<li>Qualquer resíduo</li>`]).map(residue => `<li>${residue}</li>`).join('')}
+                             ${(ecopoint.residues || [`<li>Qualquer resíduo</li>`]).map(residue => `<li>${residue.description}</li>`).join('')}
                         </ul>
                     </div>
                 </div>
             `;
         }
 
-        function createMarkers(mapCoords, ecopoint) {
-            const markerImg = document.createElement("img");
-            $(markerImg).attr({
-                src: "/images/icons8-marker-blue-64.png",
-                class: "eco-marker"
-            });
-            $("body").append(markerImg);
-
+        const createMarkers = function createMarkers(mapCoords, ecopoint) {
             const marker = new AdvancedMarkerElement({
                 map: map,
                 position: mapCoords,
-                content: markerImg,
-                title: ecopoint.title
+                title: ecopoint.title,
+                content: createMarkerElement(ecopoint.id)
             });
 
             marker.addListener("click", () => {
@@ -111,19 +76,16 @@ $(document).ready(function () {
                     );
                 } else if (result.state === "denied") {
                     console.log('denied')
-                    // denied
                 }
             });
         }
 
         function loadMap(userCoords) {
-            const CAXIAS_ORIGIN = { lat: -29.166, lng: -51.174 };
-            const USER_ORIGIN = { lat: userCoords.latitude, lng: userCoords.longitude };
+            const CAXIAS_ORIGIN = {lat: -29.166, lng: -51.174};
+            const USER_ORIGIN = {lat: userCoords.latitude, lng: userCoords.longitude};
             const ORIGIN = userCoords ? USER_ORIGIN : CAXIAS_ORIGIN;
             const ZOOM = 13;
             const MAX_ZOOM = ZOOM + 4;
-
-            console.log(USER_ORIGIN)
 
             map = new Map(document.getElementById("map"), {
                 center: ORIGIN,
@@ -135,24 +97,43 @@ $(document).ready(function () {
                 streetViewControl: false,
                 rotateControl: false,
                 fullscreenControl: false,
+                clickableIcons: false
             });
 
             $.get(window.location.href + "/listaecopontos")
-                .done(function(data) {
+                .done(function (data) {
                     $(data).each((i, entry) => {
-                        getLatLngFromAddress(entry.address)
-                            .then((coords) => {
-                                createMarkers(coords, entry);
-                            })
-                            .catch((error) => {
-                                console.error("Erro ao retornar localização do endereço:", error);
-                            });
+                        const coords = {
+                            lat: +entry.latitude,
+                            lng: +entry.longitude
+                        };
+
+                        createMarkers(coords, entry);
                     })
                 })
-                .fail(() => {
+                .fail((error) => {
                     alert("Falha ao carregar ecopontos")
                 })
         }
+
+        function createMarkerElement(id) {
+            let element = document.createElement("img");
+
+            $(element).attr({
+                src: "/images/icons8-marker-blue-64.png",
+                class: "eco-marker",
+                "data-id": id
+            });
+
+            return new PinElement({
+                background: "#FFFD55",
+                borderColor: "#FFFD55",
+                glyph: element
+            }).element;
+        }
+
+        const mapFilter = new MapFilter(createMarkers);
+        mapFilter.setupEventHandlers();
     }
 
     initMap();

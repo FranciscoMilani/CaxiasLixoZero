@@ -19,6 +19,7 @@ public class Address {
     private Integer number;
     private String addOn;
     private String neighborhood;
+	private String cep;
 
 
 	public Long getId() {
@@ -59,5 +60,13 @@ public class Address {
 
 	public void setNeighborhood(String neighborhood) {
 		this.neighborhood = neighborhood;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 }

@@ -66,25 +66,28 @@
 		</thead>
 		<tbody>
 			<tr th:each="ecopoint : ${ecopoints}">
-				<td
-					th:text="${#dates.format(ecopoint.solicitationDate, 'dd/MM/yyyy')}"></td>
+				<td th:text="${#dates.format(ecopoint.solicitationDate, 'dd/MM/yyyy')}"></td>
 				<td th:text="${ecopoint.companyName}"></td>
 				<td th:text="${ecopoint.email}"></td>
 				<td th:text="${ecopoint.responsibleName}"></td>
 				<td th:text="${ecopoint.responsiblePhone}"></td>
 				<td th:text="${ecopoint.socialNetwork}"></td>
-				<td><button class="btn btn-primary" th:attr="data-endereco=${'Rua ' + ecopoint.ecopointAddress.road + 
+				<td>
+					<button class="btn btn-primary" th:attr="data-endereco=${'Rua ' + ecopoint.ecopointAddress.road +
 							', número ' + ecopoint.ecopointAddress.number + ', bairro ' + ecopoint.ecopointAddress.neighborhood}" 
 							onclick="openModalAddress(this.getAttribute('data-endereco'))">
 							<i class="fas fa-search"></i>
-					</button></td>
-				<td>
-				    <button class="btn btn-primary" th:attr="data-residues=${ecopoint.residueType}" 
-				            onclick="openResidueModal(this.getAttribute('data-residues'))">
-				        <i class="fas fa-search"></i>
-				    </button>
+					</button>
 				</td>
-				<td><button type="button" class="btn-aprovar" th:attr="data-id=${ecopoint.id}">
+				<td>
+					<button class="btn btn-primary"
+							th:attr="data-residues=${#strings.arrayJoin(ecopoint.residues.![description], ';')}"
+							onclick="openResidueModal(this.getAttribute('data-residues'))">
+						<i class="fas fa-search"></i>
+					</button>
+				</td>
+				<td>
+					<button type="button" class="btn-aprovar" th:attr="data-id=${ecopoint.id}">
                         <i class="fas fa-check"></i>
                     </button></td>
                     <td><button type="button" class="btn-reprovar" th:attr="data-id=${ecopoint.id}">
@@ -168,7 +171,7 @@
 	    residueList.innerHTML = ""; // Limpa a lista de resíduos antes de adicionar os novos
 
 	    // Separa a string de resíduos em uma lista
-	    var residueArray = residues.split(',');
+	    var residueArray = residues.split(';');
 
 	    // Adiciona cada resíduo à lista
 	    residueArray.forEach(function(residue) {

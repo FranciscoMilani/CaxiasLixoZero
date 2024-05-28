@@ -1,5 +1,6 @@
 package br.ucs.caxiaslixozero.UI.Ecopoints.Controller;
 
+import br.ucs.caxiaslixozero.Domain.Dtos.EcopointAddressDto;
 import br.ucs.caxiaslixozero.Domain.Dtos.EcopointMapDto;
 import br.ucs.caxiaslixozero.Domain.Entities.Neighborhood;
 import br.ucs.caxiaslixozero.Services.Ecopoints.EcopointServices;
@@ -7,6 +8,7 @@ import br.ucs.caxiaslixozero.Services.ResidueService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.AllArgsConstructor;
+import org.codehaus.groovy.transform.SourceURIASTTransformation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,7 +32,7 @@ public class EcopointsMapController {
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView();
         mv.addObject("neighborhoods", Neighborhood.neighborhoodList);
-        mv.addObject("residueTypes", Arrays.asList("Vidro", "Óleo"));
+        mv.addObject("residueTypes", residueService.getAllResidues());
 
         try {
              var path = Path.of(getClass()
@@ -57,21 +59,7 @@ public class EcopointsMapController {
     @GetMapping("/listaecopontos")
     @ResponseBody
     public List<EcopointMapDto> getEcopoints() {
-        System.out.println(ecopointServices.getAllToMapEcopoint().get(0));
         return ecopointServices.getAllToMapEcopoint();
-        /*
-        list.add(new EcopointMapDto(
-                "Teste 2",
-                "912345678",
-                "email@ucs.br",
-                new EcopointAddressDto("Rua Santos Dumont", "1285", "Exposicao"),
-                "8:00",
-                "18:00",
-                Arrays.asList("Resíduo X", "Resíduo Y", "Resíduo Z"))
-        );
-
-        return list;
-        */
     }
 
     @GetMapping("/")
