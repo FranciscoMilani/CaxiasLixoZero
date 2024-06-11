@@ -2,8 +2,6 @@ package br.ucs.caxiaslixozero.UI.Ecopoints.Controller;
 
 import java.util.*;
 
-import br.ucs.caxiaslixozero.Domain.Dtos.EcopointMapDto;
-import br.ucs.caxiaslixozero.Domain.Dtos.ResidueDto;
 import br.ucs.caxiaslixozero.Domain.Entities.Neighborhood;
 import br.ucs.caxiaslixozero.Infrastructure.Utils.Utils;
 import br.ucs.caxiaslixozero.Services.ResidueService;
@@ -17,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import br.ucs.caxiaslixozero.Domain.Entities.Address;
 import br.ucs.caxiaslixozero.Domain.Entities.Ecopoint;
 import br.ucs.caxiaslixozero.Services.Ecopoints.EcopointServices;
-import org.springframework.ui.Model;
 
 @Controller
 @RequiredArgsConstructor

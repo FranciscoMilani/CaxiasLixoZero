@@ -10,4 +10,4 @@ public class CaxiaslixozeroApplication {
 		SpringApplication.run(CaxiaslixozeroApplication.class, args);
 	} 
 
-}
+} 

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>Lista de Resíduos</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body layout:fragment="body">
+<div class="container">
+    <div class="centered-btn">
+        <button class="btn btn-primary small-btn" onclick="openRegisterResidueModal()">
+            Novo Resíduo
+        </button>
+    </div>
+	<table class="tableEcopoints" border="1">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Descrição</th>
+				<th>Tipo</th>
+				<th>Excluir</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="residue : ${residues}">
+				<td th:text="${residue.name != null ? residue.name : ''}"></td>
+				<td th:text="${residue.description != null ? residue.description : ''}"></td>
+				<td th:text="${residue.residueType != null ? residue.residueType : ''}"></td>
+				<td>
+					<button type="button" class="btn-delete" th:attr="data-id=${residue.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+	<div class="modal fade" id="registerResidueModal" tabindex="-1" aria-labelledby="registerResidueLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" id="registerResidueLabel">Novo Resíduo</h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+		      </div>
+		    <form id="registerResidue" action="/registerResidue" th:object="${residue}" method="post">
+		      <div class="modal-body">
+						<label for="inputNome" class="form-label">Nome</label>
+						<input type="text" class="form-control" id="inputNome" name="name"/>
+						
+						<label for="inputDescription" class="form-label">Descrição</label>
+						<input type="text" class="form-control" id="inputDescription" name="description"/>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-save" data-bs-dismiss="modal">Salvar</button>
+		      </div>
+		    </form>
+		      
+		    </div>
+		  </div>
+	</div>
+	
+	<script>
+	    document.querySelectorAll('.btn-save').forEach(btn => {
+	        btn.addEventListener('click', function() {
+	            var name = document.getElementById('inputNome').value;
+	            var description = document.getElementById('inputDescription').value; 
+
+	            var data = {
+	                    name: name,
+	                    description: description
+	                };
+	        	            
+	            fetch('/registerResidue', {
+	                method: 'POST',
+	                headers: {
+	                    'Content-Type': 'application/json',
+	                },
+	                body: JSON.stringify(data),
+	            })
+	            .then(response => {
+	                if (response.ok) {
+	                    window.location.reload(); // Recarrega a página após o POST
+	                } else {
+	                    throw new Error('Erro ao processar a solicitação');
+	                }
+	            })
+	            .catch(error => {
+	                console.error('Erro ao enviar requisição:', error);
+	                alert('Erro ao processar a solicitação');
+	            });
+	        });
+	    });
+	</script>
+	
+	<script>
+	    document.querySelectorAll('.btn-delete').forEach(btn => {
+	        btn.addEventListener('click', function() {
+	            var id = btn.getAttribute('data-id');
+	            fetch('/residuesList', {
+	                method: 'POST',
+	                headers: {
+	                    'Content-Type': 'application/json',
+	                },
+	                body: JSON.stringify({ id: id}),
+	            })
+	            .then(response => {
+	                if (response.ok) {
+	                    window.location.reload(); // Recarrega a página após o POST
+	                } else {
+	                    throw new Error('Erro ao processar a solicitação');
+	                }
+	            })
+	            .catch(error => {
+	                console.error('Erro ao enviar requisição:', error);
+	                alert('Erro ao processar a solicitação');
+	            });
+	        });
+	    });
+	</script>
+	
+	<script>
+	function openRegisterResidueModal() {
+		// Abre o modal
+		var myModal = new bootstrap.Modal(document.getElementById('registerResidueModal'));
+		myModal.show();
+	}
+	</script>
+</body>
+</html>

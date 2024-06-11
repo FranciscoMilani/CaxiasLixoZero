@@ -1,92 +1,94 @@
 body {
-    font-family: Inter;
+	font-family: Inter;
 }
 
 #navItems li {
-    display: inline;
+	display: inline;
 }
 
 /*  FOOTER  */
 body {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+	min-height: 100vh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
 }
 /*  -----  */
 
 /*  MAP  */
-#mapHeader > select {
-    width: 33%;
+#mapHeader>select {
+	width: 33%;
 }
 
 .tableEcopoints {
-    border-collapse: collapse;
-    width: 70%;
-    margin: 0 auto;
+	border-collapse: collapse;
+	width: 70%;
+	margin: 0 auto;
 }
 
-.tableEcopoints th, 
-.tableEcopoints td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+.tableEcopoints th, .tableEcopoints td {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
 }
 
 .tableEcopoints th {
-    background-color: #f2f2f2;
-    color: #333;
+	background-color: #f2f2f2;
+	color: #333;
 }
+
 .tableEcopoints tr:nth-child(even) {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
 }
+
 .tableEcopoints tr:hover {
-    background-color: #ddd;
-}
- .tableEcopoints {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
+	background-color: #ddd;
 }
 
- /* CADASTRO */
+.tableEcopoints {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+}
 
+/* CADASTRO */
 fieldset {
-    margin-top: 35px;
+	margin-top: 35px;
 }
 
 /* INDEX */
 .banner img {
-    width: 100%;
-    height: auto;
+	width: 100%;
+	height: auto;
 }
 
 .ecopoints-section, .recyclopedia-section, .contribute-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	padding: 2rem;
 }
 
 .background {
-    width: 100%;
-    background-color: #dce6ec;
+	width: 100%;
+	background-color: #dce6ec;
 }
 
-.ecopoints-section h2, .recyclopedia-section h2, .contribute-section h2 {
-    margin-bottom: 1rem;
+.ecopoints-section h2, .recyclopedia-section h2, .contribute-section h2
+	{
+	margin-bottom: 1rem;
 }
 
 button, a.btn {
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
-    text-decoration: none;
+	color: #fff;
+	border: none;
+	padding: 0.5rem 1.5rem;
+	border-radius: 5px;
+	text-decoration: none;
 }
 
 .container-fluid .col-md-6 img {
-    display: block;
+	display: block;
 }
 
 .col-md-6 img {
@@ -94,15 +96,26 @@ button, a.btn {
 	margin: auto;
 }
 
-.row{
+.row {
 	width: 73%;
 	margin: auto;
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
 
-.buttonContribuir{
+.buttonContribuir {
 	margin: auto;
+}
+
+.centered-btn {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px; /* Espaçamento superior */
+}
+
+.small-btn {
+	max-width: 200px; /* Largura máxima */
+	width: 100%; /* Ocupa toda a largura do contêiner */
 }
 
 /* FIM INDEX */

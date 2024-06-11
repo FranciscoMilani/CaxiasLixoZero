@@ -8,10 +8,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,4 +39,30 @@ public class ResidueService {
         System.out.println(res.size());
         return res;
     }
+    
+    public Residue findResidueById(Long id) {
+		Optional<Residue> residueOptional = residueRepository.findById(id);
+		return residueOptional.orElse(null);
+	}
+    
+    public void deleteResidue(Long id) {
+    	try {
+        	residueRepository.deleteEcopointResidue(id);
+		} catch (Exception e) {
+		}
+    	residueRepository.deleteById(id);
+    }
+    
+    public List<Residue> findAllResidues(){
+    	return residueRepository.findAll();
+    }
+    
+	@Transactional // Anotação movida para o método
+	public void saveResidue(Residue residue) {
+		try {
+			entityManager.persist(residue);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
