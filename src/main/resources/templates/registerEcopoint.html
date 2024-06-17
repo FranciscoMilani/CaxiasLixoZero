@@ -7,94 +7,123 @@
 	<title>Formulário Ecopontos</title>
 </head>
 <body layout:fragment="body">
-	<main>
+	<div>
+		<div class="progress-bar">
+			<span class="progress-bar-step active-step">1</span>
+			<span class="progress-bar-step">2</span>
+			<span class="progress-bar-step">3</span>
+		</div>
+	</div>
+	<main class="form-container">
 		<section class="container-fluid d-flex justify-content-center" style="max-width: 500px;">
-			<form id="ecopointForm" action="/registerEcopoint" th:object="${ecopoint}" method="post">
-				<fieldset>
-					<legend>Informações</legend>
-					<label for="inputEmail1" class="form-label">E-mail</label>
-					<input type="email" class="form-control" id="inputEmail1" name="email"/>
+			<form id="ecopointForm" class="centralized-form" action="/registerEcopoint" th:object="${ecopoint}" method="post">
+				<div class="step">
+					<fieldset>
+						<legend class="text-center">Informações</legend>
+						<label for="inputEmail1" class="form-label">E-mail</label>
+						<input type="email" class="form-control" id="inputEmail1" name="email" required/>
+						<div class="invalid-feedback">Insira um email válido (e.g. "email@gmail.com")</div>
 
-					<label for="inputNome" class="form-label">Nome da Empresa / Instituição / Estabelecimento</label>
-					<input type="text" class="form-control" id="inputNome" name="companyName"/>
+						<label for="inputNome" class="form-label">Nome da Empresa / Instituição / Estabelecimento</label>
+						<input type="text" class="form-control" id="inputNome" name="companyName" required/>
 
-					<label for="inputResponsavel" class="form-label">Responsável pelo cadastro (nome)</label>
-					<input type="text" class="form-control" id="inputResponsavel" name="responsibleName"/>
+						<label for="inputResponsavel" class="form-label">Responsável pelo cadastro (nome)</label>
+						<input type="text" class="form-control" id="inputResponsavel" name="responsibleName" required/>
 
-					<label for="inputEmail1Resp" class="form-label">E-mail ou WhatsApp (preferível) do responsável pelo cadastro</label>
-					<input type="text" class="form-control" id="inputEmail1Resp" name="responsiblePhone"/>
+						<label for="inputEmail1Resp" class="form-label">E-mail ou WhatsApp (preferível) do responsável pelo cadastro</label>
+						<input type="text" class="form-control" id="inputEmail1Resp" name="responsiblePhone" required/>
 
-					<label for="inputRedeSocial" class="form-label">Redes sociais do local (se houver)</label>
-					<input type="text" class="form-control" id="inputRedeSocial" name="socialNetwork"/>
-				</fieldset>
+						<label for="inputRedeSocial" class="form-label">Redes sociais do local (se houver)</label>
+						<input type="text" class="form-control" id="inputRedeSocial" name="socialNetwork" required/>
+					</fieldset>
 
-				<fieldset>
-					<legend>Horários de acesso</legend>
-					<div class="d-flex flex-row justify-content-around">
-						<div class="w-35">
-							<label for="inputAbertura" class="form-label">Horário abertura</label>
-							<input type="time" class="form-control" id="inputAbertura" name="openingTime"/>
-						</div>
-						<div class="w-35">
-							<label for="inputFechamento" class="form-label">Horário fechamento</label>
-							<input type="time" class="form-control" id="inputFechamento" name="closingTime"/>
-						</div>
+					<div class="navigation">
+						<button type="button" class="btn btn-primary btn-next w-50">Avançar</button>
 					</div>
-				</fieldset>
+				</div>
 
-				<fieldset id="enderecoFieldset">
-					<legend>Endereço</legend>
-					<label for="inputCep" class="form-label">CEP</label>
-					<input type="text" class="form-control" id="inputCep" name="cep" maxlength="8" required/>  <!-- pattern="\d{5}-?\d{3}"-->
-					<div id="cepFeedback" class="invalid-feedback">Insira um CEP válido</div>
+				<div class="step">
+					<fieldset id="enderecoFieldset">
+						<legend class="text-center">Endereço</legend>
+						<label for="inputCep" class="form-label">CEP</label>
+						<input type="text" class="form-control" id="inputCep" name="cep" maxlength="8" required/>  <!-- pattern="\d{5}-?\d{3}"-->
+						<div id="cepFeedback" class="invalid-feedback">Insira um CEP válido</div>
 
-					<label for="inputRua" class="form-label">Rua</label>
-					<input type="text" class="form-control" id="inputRua" name="road" required/>
+						<label for="inputRua" class="form-label">Rua</label>
+						<input type="text" class="form-control address-required-part" id="inputRua" name="road"/>
 
-					<label for="selectBairro" class="form-label">Bairro</label>
-					<select class="selectBairro form-select" id="selectBairro" name="neighborhood" required>
-						<option value="0">Selecione</option>
-						<option th:each="val, iter : ${neighborhoods}" th:value="${val}" th:text="${val}"></option>
-					</select>
+						<label for="selectBairro" class="form-label">Bairro</label>
+						<select class="selectBairro form-select address-required-part" id="selectBairro" name="neighborhood">
+							<option value="">Selecione</option>
+							<option th:each="val, iter : ${neighborhoods}" th:value="${val}" th:text="${val}"></option>
+						</select>
 
-					<label for="inputNumero" class="form-label">Número</label>
-					<input type="number" class="form-control" id="inputNumero" name="number" required/>
+						<label for="inputNumero" class="form-label">Número</label>
+						<input type="number" class="form-control" id="inputNumero" name="number" required/>
+						<div class="invalid-feedback">Insira o número da residência/localidade</div>
 
-					<label for="inputComplemento" class="form-label">Complemento</label>
-					<input type="text" class="form-control" id="inputComplemento" name="addOn"/>
+						<label for="inputComplemento" class="form-label">Complemento</label>
+						<input type="text" class="form-control" id="inputComplemento" name="addOn"/>
 
-					<input type="hidden" id="latitude" name="latitude" value="">
-					<input type="hidden" id="longitude" name="longitude" value="">
-				</fieldset>
+						<input type="hidden" id="latitude" name="latitude" value="">
+						<input type="hidden" id="longitude" name="longitude" value="">
+					</fieldset>
 
-				<br/>
-				<fieldset>
-					<p>Tipo de resíduo que o Ecoponto vai receber (selecionar um ou mais!)</p>
-					<div class="form-check">
-					<label th:each="opcao : ${opcoes}">
-			            <input class="form-check-input" type="checkbox" th:data-id="${opcao.id}" th:value="${opcao.id}" name="selectedResidues"/>
-			            <span th:text="${opcao.description}"></span>
-			            <br/>
-			        </label>
-			        </div>
-					<br/>
-					<br/>
-					<p>Seu Ecoponto vai ser aberto ao público em geral?*</p>
-					<div class="form-check">
-			 			<input class="form-check-input" type="radio" th:field="*{isPublic}" value="true"/> Sim
-			 		</div>
-			 		<div class="form-check">
-	        			<input class="form-check-input" type="radio" th:field="*{isPublic}" value="false"/> Não
+					<div class="navigation d-flex justify-content-between align-items-center">
+						<button type="button" class="btn btn-secondary btn-prev">Voltar</button>
+						<button type="button" class="btn btn-primary btn-next" style="flex-basis: 50%">Avançar</button>
 					</div>
-				</fieldset>
-				<br/><br/>
-				<center>
-					<button type="submit" class="btn btn-primary">Enviar</button>
-				</center>
+				</div>
+
+				<div class="step">
+					<fieldset>
+						<legend class="text-center">Especificações finais</legend>
+						<p>Tipo de resíduo que o Ecoponto vai receber (selecionar um ou mais!)</p>
+						<div class="form-check">
+							<div th:each="opcao : ${opcoes}">
+								<input class="form-check-input input-residue" type="checkbox" th:data-id="${opcao.id}" th:value="${opcao.id}" th:id="'residue' + ${opcao.id}" name="selectedResidues"/>
+								<label class="form-check-label" th:text="${opcao.description}" th:for="'residue' + ${opcao.id}"></label>
+								<br/>
+							</div>
+							<div id="residueCheckboxInvalidFeedback" class="invalid-feedback">Selecione ao menos um resíduo</div>
+						</div>
+						<br/>
+						<br/>
+						<p>Seu Ecoponto vai ser aberto ao público em geral?*</p>
+						<div class="d-flex justify-content-around">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" name="isPublic" type="radio" th:field="*{isPublic}" value="true" required/> Sim
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" name="isPublic" type="radio" th:field="*{isPublic}" value="false"/> Não
+							</div>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<legend class="text-center">Horários de acesso</legend>
+						<div class="d-flex flex-row justify-content-around">
+							<div class="w-35">
+								<label for="inputAbertura" class="form-label">Horário abertura</label>
+								<input type="time" class="form-control" id="inputAbertura" name="openingTime" required/>
+							</div>
+							<div class="w-35">
+								<label for="inputFechamento" class="form-label">Horário fechamento</label>
+								<input type="time" class="form-control" id="inputFechamento" name="closingTime" required/>
+							</div>
+						</div>
+					</fieldset>
+
+					<div class="navigation d-flex justify-content-between align-items-center">
+						<button type="button" class="btn btn-secondary btn-prev">Voltar</button>
+						<button type="submit" class="btn btn-primary" style="flex-basis: 50%">Enviar</button>
+					</div>
+					<center>
+					</center>
+				</div>
 			</form>
 		</section>
 	</main>
-
 	<script th:inline="javascript" > var geoAPIKey = /*[[${geoKey}]]*/;</script>
 	<script>
 		$(document).ready(function() {
@@ -144,25 +173,46 @@
 			}
 
 			function updateAddressFieldsFail() {
-				$("#enderecoFieldset #inputRua, #selectBairro").each(function (){
+				$("#enderecoFieldset .address-required-part").not("#inputCep").each(function (){
 					$(this).val("");
 					$(this).prop("readonly", false);
-				})
+				});
+
+				$("#selectBairro option:not(:selected)").attr('disabled', false);
 			}
 
 			function handleValidAddress(data) {
 				$("#inputCep").removeClass("is-invalid");
-				$("#enderecoFieldset #inputRua, #selectBairro").each((i, el) => {
-					$(el).prop("readonly", true);
+				$("#enderecoFieldset .address-required-part").not("#inputCep").each(function() {
+					$(this).prop("readonly", true);
 				})
+
+				$("#selectBairro option:not(:selected)").attr('disabled', true);
 
 				$("#inputRua").val(data.logradouro);
 				$("#selectBairro").val(data.bairro);
 			}
 
+			function validateFields() {
+				const $fields = $("input.input-residue[type=checkbox]:checked");
+				//return $fields.length > 0;
+
+				if ($('input[name="selectedResidues"]:checked').length === 0) {
+					$('#residueCheckboxInvalidFeedback').show();
+					return false;
+				}
+
+				$('#residueCheckboxInvalidFeedback').hide();
+				return true;
+			}
+
 			$("#ecopointForm").on("submit", function(event) {
 				event.preventDefault();
 				event.stopPropagation();
+
+				if (!validateFields()) {
+					return;
+				}
 
 				const address = {
 					cep: $("#inputCep").val().slice(0, 5) + '-' + $("#inputCep").val().slice(5),
@@ -197,5 +247,7 @@
 			});
 		});
 	</script>
+
+	<script type="text/javascript" th:src="@{/js/FormStep.js}"></script>
 </body>
 </html>

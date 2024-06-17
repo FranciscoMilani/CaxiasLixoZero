@@ -5,19 +5,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 public interface EcopointRepository extends JpaRepository<Ecopoint, Long> {
-//    List<Ecopoint> findFirst10ByResidueTypeIn(Collection<String> residueType);
-//
-//    List<Ecopoint> findFirst10ByResidueType(String residueType);
 
-	@Query("SELECT e FROM Ecopoint e WHERE e.ecopointAddress.neighborhood LIKE %:neighborhood%")
-	List<Ecopoint> findByNeighborhoodName(@Param("neighborhood") String neighborhood);
+	@Query("SELECT e FROM Ecopoint e JOIN e.residues r WHERE (:neighborhood IS NULL OR e.ecopointAddress.neighborhood LIKE %:neighborhood%) " +
+			"AND (:residueId IS NULL OR r.id = :residueId)")
+	List<Ecopoint> findByNeighborhoodAndResidueId(@Param("neighborhood") String neighborhood, @Param("residueId") Long residueId);
 
-	@Query("SELECT e FROM Ecopoint e WHERE e.companyName LIKE %:company% AND " +
+	@Query("SELECT e FROM Ecopoint e WHERE e.companyName LIKE %:company% AND " +	
 		       "(:approved IS NULL OR e.isApproved = :approved)")
 	List<Ecopoint> findByCompanyName(@Param("company") String companyName, @Param("approved") Boolean isApproved);
 
@@ -35,6 +32,4 @@ public interface EcopointRepository extends JpaRepository<Ecopoint, Long> {
 	
 	@Query("SELECT e FROM Ecopoint e WHERE (:approved IS NULL AND e.isApproved IS NULL) OR e.isApproved = :approved")
 	List<Ecopoint> findByStatus(@Param("approved") Boolean isApproved);
-
-	// List<Ecopoint> findFirst10ByResidueId(Long residueId);
 }

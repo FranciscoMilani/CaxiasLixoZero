@@ -1,0 +1,101 @@
+<html lang="pt-br"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Cadastrar/Entrar</title>
+</head>
+<body layout:fragment="body">
+    <div class="form-container mx-auto">
+            <form id="formLogin" th:action="@{/auth/login}" th:object="${loginDto}" method="post">
+                <div class="mb-4">
+                    <label class="form-label" for="username">Usuário</label>
+                    <input type="text" id="username" class="form-control" th:field="*{username}"/>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label" for="password">Senha</label>
+                    <input type="password" id="password" class="form-control" th:field="*{password}" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block w-100">Entrar</button>
+            </form>
+
+<!--            <form hidden id="formRegister" action="#" th:action="@{/register}" th:object="${user}" method="post">-->
+<!--                <div class="mb-4">-->
+<!--                    <label class="form-label" for="username">Usuário</label>-->
+<!--                    <input type="text" id="username" class="form-control" th:field="*{username}"/>-->
+<!--                </div>-->
+
+<!--                <div class="mb-4">-->
+<!--                    <label class="form-label" for="password">Senha</label>-->
+<!--                    <input type="password" id="password" class="form-control" th:field="*{password}" />-->
+<!--                </div>-->
+
+<!--                <button type="submit" class="btn btn-primary btn-block w-100">Cadastrar</button>-->
+<!--            </form>-->
+
+            <button id="btnToggleForms" class="btn btn-primary mt-3 col-md-6 align-self-end">Cadastrar</button>
+            <span id="resultMessage"></span>
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $("#btnToggleForms").click(() => {
+                $("#formRegister").toggle();
+                $("#formLogin").toggle();
+            })
+
+            // $('#formLogin').submit(function(event) {
+            //     event.preventDefault();
+            //
+            //     let formData = {};
+            //     $(this).serializeArray().forEach(item => {
+            //         formData[item.name] = item.value;
+            //     });
+            //
+            //     $.ajax({
+            //         url: '/login',
+            //         type: 'POST',
+            //         contentType: 'application/json',
+            //         data: JSON.stringify(formData),
+            //         done: function() {
+            //             window.location.href = '/gerenciamento';
+            //         },
+            //         fail: function(xhr) {
+            //             alert(xhr.responseText);
+            //         }
+            //     });
+            // });
+
+            // $('#formLogin').submit(function(event) {
+            //     debugger
+            //     event.preventDefault();
+            //
+            //     let formData = {};
+            //     $(this).serializeArray().forEach(item => {
+            //         formData[item.name] = item.value;
+            //     });
+            //
+            //     $.ajax({
+            //         url: '/auth/register',
+            //         type: 'POST',
+            //         contentType: 'application/json',
+            //         data: JSON.stringify(formData),
+            //         done: function() {
+            //             $("#resultMessage").val("Sua conta foi registrada! Carregando...");
+            //
+            //             setTimeout(function() {
+            //                 console.log("After delay");
+            //             }, 2000);
+            //             window.location.href = '/gerenciamento';
+            //         },
+            //         fail: function(xhr) {
+            //             alert(xhr.responseText);
+            //         }
+            //     });
+            // });
+        });
+    </script>
+    <script type="text/javascript" th:src="@{/js/Login.js}"></script>
+</body>
+</html>

@@ -4,6 +4,8 @@ import br.ucs.caxiaslixozero.Domain.Dtos.EcopointMapDto;
 import br.ucs.caxiaslixozero.Domain.Repositories.EcopointRepository;
 import br.ucs.caxiaslixozero.Infrastructure.Mappers.EcopointMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import br.ucs.caxiaslixozero.Domain.Entities.Address;
@@ -20,7 +22,6 @@ import java.util.Optional;
 public class EcopointServices {
 
 	private final EntityManager entityManager; // Removido o autowiring
-
 	private final EcopointRepository repository;
 
 	@Transactional // Anotação movida para o método
@@ -64,21 +65,16 @@ public class EcopointServices {
 		return repository.findAll().stream().map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
 	}
 
-//	public List<EcopointMapDto> getMapEcopointsFilteredByResidue(String residueType) {
-//		return repository.findFirst10ByResidueTypeIn(List.of(residueType)).stream()
-//				.map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
-//	}
-
-	public List<EcopointMapDto> getMapEcopointFilteredByNeighborhood(String neighborhood) {
-		return repository.findByNeighborhoodName(neighborhood).stream().map(EcopointMapper.INSTANCE::toEcopointMapDto)
-				.toList();
+	public List<EcopointMapDto> getMapEcopointsFiltered(String neighborhood, Long residueId) {
+		return repository.findByNeighborhoodAndResidueId(neighborhood, residueId).stream()
+				.map(EcopointMapper.INSTANCE::toEcopointMapDto).toList();
 	}
 
 	public List<Ecopoint> getEcopointsByCompanyName(String companyName, Boolean isApproved) {
 		return repository.findByCompanyName(companyName, isApproved);
 	}
 
-	public List<Ecopoint> getEcopointsByResponsibleName(String responsibleName,  Boolean isApproved) {
+	public List<Ecopoint> getEcopointsByResponsibleName(String responsibleName, Boolean isApproved) {
 		return repository.findByResponsibleName(responsibleName, isApproved);
 	}
 

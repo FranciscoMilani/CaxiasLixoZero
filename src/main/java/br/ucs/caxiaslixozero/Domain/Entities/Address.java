@@ -1,5 +1,6 @@
 package br.ucs.caxiaslixozero.Domain.Entities;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class Address {
     private String road; // street
     private Integer number;
     private String addOn;
-    private String neighborhood;
+	private String neighborhood;
 	private String cep;
 
 

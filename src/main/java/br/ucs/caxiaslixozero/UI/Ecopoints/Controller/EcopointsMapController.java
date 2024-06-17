@@ -18,11 +18,12 @@ import java.io.Reader;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 //@Controller
 @RestController
 @AllArgsConstructor
-@RequestMapping("/{mapa}")
+@RequestMapping("/mapa")
 public class EcopointsMapController {
 
     private ResidueService residueService;
@@ -62,13 +63,11 @@ public class EcopointsMapController {
         return ecopointServices.getAllToMapEcopoint();
     }
 
-    @GetMapping("/")
+    @GetMapping("/filtrar")
     @ResponseBody
-    public List<EcopointMapDto> getEcopointsFiltered(@RequestParam String neighborhoodDes,
-                                                     @RequestParam String residueType) {
+    public List<EcopointMapDto> getEcopointsFiltered(@RequestParam("neighborhood") Optional<String> neighborhood,
+                                                     @RequestParam("residueId") Optional<Long>  residueId) {
 
-        return ecopointServices.getMapEcopointFilteredByNeighborhood(neighborhoodDes);
-
+        return ecopointServices.getMapEcopointsFiltered(neighborhood.orElse(""), residueId.orElse(null));
     }
-
 }

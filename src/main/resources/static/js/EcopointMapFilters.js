@@ -7,18 +7,19 @@ export default class MapFilter {
         const self = this;
 
         $(document).on("click", "#clearFilters", function () {
-            $("#selectNeighborhood").val(-1);
-            $("#selectResidue").val(-1);
+            $("#selectNeighborhood").val("");
+            $("#selectResidue").val("");
             removeMarkers();
         })
 
         $(document).on("change", "#mapHeader select", function (event) {
-            let neighborhoodDes = $("#selectNeighborhood :selected").text();
-            let residueType = $("#selectResidue :selected").val();
+            removeMarkers();
+            let neighborhood = $("#selectNeighborhood :selected").val();
+            let residueId = $("#selectResidue :selected").val();
 
-            $.get(`${window.location.pathname}/`, {
-                residueType: residueType,
-                neighborhoodDes: neighborhoodDes
+            $.get(`${window.location.pathname}/filtrar`, {
+                neighborhood: neighborhood,
+                residueId: residueId
             }, function (data) {
                 if (data && data.length != 0) {
                     $(data).each((i, entry) => {
@@ -34,7 +35,7 @@ export default class MapFilter {
         });
 
         function removeMarkers() {
-            MARKERS.forEach(marker => {
+            MARKERS.slice(1).forEach(marker => {
                 marker.map = null
             });
         }

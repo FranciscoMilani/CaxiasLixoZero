@@ -30,8 +30,6 @@ public class ecopointController {
 	public ModelAndView registerEcopoint() {
 		ModelAndView mv = new ModelAndView("registerEcopoint");
 		mv.addObject("ecopoint", new Ecopoint());
-//		List<ResidueDto> residues = new ArrayList<>();
-
 //		residuos.add("Esponjas de cozinha usadas");
 //		residuos.add("Embalagens Laminadas (de salgadinho, biscoitos, bombons, etc.)");
 //		residuos.add("Raios X (cartelas radiográficas)");

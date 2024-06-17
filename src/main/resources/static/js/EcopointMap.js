@@ -60,7 +60,15 @@ $(document).ready(function () {
             navigator.permissions.query({name: "geolocation"}).then((result) => {
                 if (result.state === "granted") {
                     navigator.geolocation.getCurrentPosition(
-                        (position) => loadMap(position.coords),
+                        (position) => {
+                            const USER_COORDS = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+
+                            loadMap(USER_COORDS);
+                            createDefaultMarker(USER_COORDS);
+                        },
                         function (positionError) {
                             console.log(positionError)
                         },
@@ -82,8 +90,8 @@ $(document).ready(function () {
 
         function loadMap(userCoords) {
             const CAXIAS_ORIGIN = {lat: -29.166, lng: -51.174};
-            const USER_ORIGIN = {lat: userCoords.latitude, lng: userCoords.longitude};
-            const ORIGIN = userCoords ? USER_ORIGIN : CAXIAS_ORIGIN;
+            //const ORIGIN = userCoords ? userCoords : CAXIAS_ORIGIN;
+            const ORIGIN = CAXIAS_ORIGIN;
             const ZOOM = 13;
             const MAX_ZOOM = ZOOM + 4;
 
@@ -130,6 +138,24 @@ $(document).ready(function () {
                 borderColor: "#FFFD55",
                 glyph: element
             }).element;
+        }
+
+        function createDefaultMarker(userCoords) {
+            const element = document.createElement("img");
+
+            $(element).attr({
+                src: "/images/icons8-marker-green-64.png",
+                class: "you-marker"
+            });
+
+            const marker = new AdvancedMarkerElement({
+                map: map,
+                position: userCoords,
+                title: "Você",
+                content: new PinElement({ glyph: element }).element
+            });
+            // `<div class="border rounded-2 bg-dark"><h3 class="text-light text-center justify-content-center">Você</h3></div>`
+            MARKERS.push(marker);
         }
 
         const mapFilter = new MapFilter(createMarkers);

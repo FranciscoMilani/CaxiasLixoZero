@@ -10,12 +10,12 @@
     <div class="w-75 m-auto mt-3 bg-secondary border rounded-top-3">
         <div class="container p-3 d-flex flex-row justify-content-evenly" id="mapHeader">
             <select id="selectNeighborhood" class="form-select">
-                <option value="-1" selected>Selecione um Bairro</option>
-                <option th:each="val, iter : ${neighborhoods}" th:value="${iter.index}" th:text="${val}"></option>
+                <option value="" selected>Qualquer bairro</option>
+                <option th:each="val, iter : ${neighborhoods}" th:value="${val}" th:text="${val}"></option>
             </select>
             <select id="selectResidue" class="form-select">
-                <option value="-1" selected>Selecione um Resíduo</option>
-                <option th:each="val, iter: ${residueTypes}" th:value="${iter.index}" th:text="${val.description}"></option>
+                <option value="" selected>Qualquer resíduo</option>
+                <option th:each="val, iter: ${residueTypes}" th:value="${val.id}" th:text="${val.description}"></option>
             </select>
             <button id="clearFilters" class="btn btn-light"><i class="bi bi-trash-fill"></i></button>
         </div>

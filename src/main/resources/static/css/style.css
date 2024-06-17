@@ -6,6 +6,10 @@ body {
     display: inline;
 }
 
+.dropdown-button:hover .dropdown-menu {
+    display: block;
+}
+
 /*  FOOTER  */
 body {
     min-height: 100vh;
@@ -47,10 +51,33 @@ body {
     font-size: 14px;
 }
 
- /* CADASTRO */
+ /* CADASTRO ECOPONTO */
 
 fieldset {
-    margin-top: 35px;
+    margin-top: 15px;
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+.navigation {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.centralized-form {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* INDEX */
@@ -105,4 +132,46 @@ button, a.btn {
 	margin: auto;
 }
 
+.progress-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    overflow: visible;
+}
+
+.progress-bar-step {
+    width: 50px;
+    height: 50px;
+    background-color: #ccc;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 2.3;
+}
+
+.progress-bar-step.active-step {
+    background-color: #c1d03a;
+    color: #fff;
+}
+
 /* FIM INDEX */
+
+
+/* LOGIN/REGISTRO */
+
+.form-container {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+
