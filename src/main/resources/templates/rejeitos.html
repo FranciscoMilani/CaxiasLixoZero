@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-br"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/reciclopedia.js"></script>
+    <link th:href="@{css/style.css}" rel="stylesheet" type="text/css">
+    
+    <style>
+		@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+	</style>
+    
+    <link rel="icon" type="image/x-icon" th:href="@{/images/faviconCLZ.png}">
+    <title>Reciclopédia | Rejeitos</title>
+</head>
+<body layout:fragment="body">
+	<main>
+		<section class="banner">
+	        <img th:src="@{/images/bannerRejeito.png}" alt="Banner" class="img-fluid w-100">
+		</section>
+	
+		<section class="listaResiduos listaRejeitos">
+	        <div class="container mt-5">
+	            <div class="input-group mb-4">
+	                <div class="input-group-prepend">
+	                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+	                </div>
+	                <input type="text" class="form-control" id="searchBar" placeholder="Pesquisar">
+	            </div>
+	            <div class="row">
+	                <div class="col-md-6">
+	                    <ul class="list-group" id="residuoList1">
+	                        <li th:each="residuo, iterStat : ${rejeitos}"
+	                            th:if="${iterStat.index % 2 == 0}"
+	                            class="list-group-item" th:text="${residuo}"></li>
+	                    </ul>
+	                </div>
+	                <div class="col-md-6">
+	                    <ul class="list-group" id="residuoList2">
+	                        <li th:each="residuo, iterStat : ${rejeitos}"
+	                            th:if="${iterStat.index % 2 != 0}"
+	                            class="list-group-item" th:text="${residuo}"></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	</main>
+</body>
+</html>

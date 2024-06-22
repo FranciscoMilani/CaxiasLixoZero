@@ -1,3 +1,13 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    height: 100%;
+}
+
 body {
 	font-family: Inter;
 }
@@ -102,8 +112,7 @@ fieldset {
 	background-color: #dce6ec;
 }
 
-.ecopoints-section h2, .recyclopedia-section h2, .contribute-section h2
-	{
+.ecopoints-section h2, .recyclopedia-section h2, .contribute-section h2 {
 	margin-bottom: 1rem;
 }
 
@@ -124,7 +133,7 @@ button, a.btn {
 	margin: auto;
 }
 
-.row {
+.index-row {
 	width: 73%;
 	margin: auto;
 	padding-top: 20px;
@@ -187,5 +196,162 @@ button, a.btn {
     justify-content: center;
     height: 100%;
 }
+
+/* COMEÇO reciclopedia.html */
+.reciclopedia-main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reciclopedia-container .residue-box {
+    width: 200px;
+    height: 200px;
+    margin: 15px;
+    border-radius: 15px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+
+.reciclopedia-container .residue-box:hover .overlay {
+    opacity: 0.6;
+}
+
+.reciclopedia-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    border-radius: 15px;
+    transition: opacity 0.3s;
+}
+
+.reciclopedia-container .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: white;
+}
+
+.reciclopedia-container .residue-common {
+    background-image: url('/images/imgComum.png');
+}
+
+.reciclopedia-container .residue-recyclable {
+    background-image: url('/images/imgReciclavel.png');
+}
+
+.reciclopedia-container .residue-special {
+    background-image: url('/images/imgEspecial.png');
+}
+
+.reciclopedia-container .residue-reject {
+    background-image: url('/images/imgRejeito.png');
+}
+/* FIM reciclopedia.html */
+
+/* COMEÇO - Todas páginas de resíduos */
+
+.listaResiduos {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    align-items: flex-start;
+    margin-bottom: -25px;
+    padding-bottom: 50px;
+}
+
+.listaResiduos .container {
+    max-width: 1000px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.listaResiduos h2 {
+    color: #333;
+}
+
+.listaResiduos .list-group-item {
+    border: none;
+    padding: 10px 15px;
+    font-family: "Varela Round", sans-serif;
+    font-weight: 0;
+    color: #002000;
+    font-size: 24px;
+}
+
+.listaResiduos .input-group-text {
+    background-color: #fff;
+    border-right: 0;
+}
+
+.listaResiduos .form-control {
+    border-left: 0;
+}
+
+.listaResiduos .form-control:focus {
+    box-shadow: none;
+    outline: none;
+    border-color: #ced4da;
+}
+
+.listaResiduos .input-group {
+    max-width: 600px;
+    margin: 0 auto 20px;
+}
+/* FIM - Todas páginas de resíduos */
+
+/* COMEÇO - residuosComuns.html*/
+.listaResiduosComuns {    
+    background-color: #f7f2ee;
+}
+
+.listaResiduosComuns .list-group-item:nth-child(odd) {
+    background-color: #f7f2ee;
+}
+/* FIM - residuosComuns.html */
+
+/* COMEÇO - residuosEspeciais.html*/
+.listaResiduosEspeciais {    
+    background-color: #eeeeee;
+}
+
+.listaResiduosEspeciais .list-group-item:nth-child(odd) {
+    background-color: #eeeeee;
+}
+/* FIM - residuosEspeciais.html */
+
+/* COMEÇO - rejeitos.html*/
+.listaRejeitos {    
+    background-color: #f9fdf2;
+}
+
+.listaRejeitos .list-group-item:nth-child(odd) {
+    background-color: #f9fdf2;
+}
+/* FIM - rejeitos.html */
+
+/* COMEÇO - residuosReciclaveis.html*/
+.listaResiduosReciclaveis {    
+    background-color: #ffffe6;
+}
+
+.listaResiduosReciclaveis .list-group-item:nth-child(odd) {
+    background-color: #ffffe6;
+}
+/* FIM - residuosReciclaveis.html */
 
 

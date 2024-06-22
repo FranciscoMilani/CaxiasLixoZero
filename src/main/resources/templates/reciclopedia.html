@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-br"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/reciclopedia.js"></script>
+    
+    <link th:href="@{css/style.css}" rel="stylesheet" type="text/css">
+    
+    <link rel="icon" type="image/x-icon" th:href="@{/images/faviconCLZ.png}">
+    
+    <title>Reciclopédia</title>
+</head>
+
+<body layout:fragment="body">
+	<section class="banner">
+        <img th:src="@{/images/bannerReciclopedia.png}" alt="Banner" class="img-fluid w-100">
+	</section>
+		
+	<main class="container mt-5 reciclopedia-main text-center">
+        <div class="d-flex justify-content-center flex-wrap reciclopedia-container">
+            <div class="residue-box residue-common" onclick="location.href='/residuosComuns'">
+                <div class="overlay"></div>
+                <div class="content"></div>
+            </div>
+            <div class="residue-box residue-recyclable" onclick="location.href='/residuosReciclaveis'">
+                <div class="overlay"></div>
+                <div class="content"></div>
+            </div>
+            <div class="residue-box residue-special" onclick="location.href='/residuosEspeciais'">
+                <div class="overlay"></div>
+                <div class="content"></div>
+            </div>
+            <div class="residue-box residue-reject" onclick="location.href='/Rejeitos'">
+                <div class="overlay"></div>
+                <div class="content"></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
