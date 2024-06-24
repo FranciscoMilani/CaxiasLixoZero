@@ -179,9 +179,15 @@ button, a.btn {
     line-height: 2.3;
 }
 
-.progress-bar-step.active-step {
-    background-color: #c1d03a;
+.progress-bar-step.done-step {
+    /*background-color: #fdfb54;*/
+	background-color: #bbca50;
     color: #fff;
+}
+
+.progress-bar-step.active-step {
+	background-color: #41819d;
+	color: #fff;
 }
 
 /* FIM INDEX */

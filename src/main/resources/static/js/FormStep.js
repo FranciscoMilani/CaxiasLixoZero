@@ -11,6 +11,7 @@ $(document).ready(function() {
 
         $progressBarSteps.each(function(index) {
             $(this).toggleClass("active-step", index === step);
+            $(this).toggleClass("done-step", index < step);
         });
     }
 
@@ -32,7 +33,6 @@ $(document).ready(function() {
     function validateForm() {
         let valid = true;
 
-        /*"input, select, textarea"*/
         $(".step").eq(currentStep).find("[required]").each(function() {
             if (!this.checkValidity()) {
                 $(this).addClass("is-invalid");
@@ -44,13 +44,6 @@ $(document).ready(function() {
                     $(this).removeClass("is-invalid");
                 }
             });
-
-            // if (/*$(this).prop("required") &&*/ $(this).val().trim() == "" ||  $(this).val() === null) {
-            //     $(this).addClass("is-invalid");
-            //     valid = false;
-            // } else {
-            //     $(this).removeClass("is-invalid");
-            // }
         });
 
         if (valid) {
@@ -59,9 +52,6 @@ $(document).ready(function() {
 
         return valid;
     }
-    // function gotoStep(stepNum) {
-    //     nextPrev(+stepNum);
-    // }
 
     $(document).on('click', '.btn-next', function() {
         nextPrev(1);
@@ -70,18 +60,6 @@ $(document).ready(function() {
     $(document).on('click', '.btn-prev', function() {
         nextPrev(-1);
     });
-
-    //  $("[required]").on("input change", function() {
-    //     if ($(this).val().trim() !== "" && $(this).val() !== null) {
-    //         $(this).removeClass("is-invalid");
-    //     }
-    // });
-
-    // $(document).on('click', '.progress-bar-step', function() {
-    //     let index = $(this).index();
-    //     console.log($(this).index)
-    //     gotoStep(index);
-    // });
 });
 
 

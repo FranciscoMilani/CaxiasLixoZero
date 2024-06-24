@@ -38,9 +38,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/**").permitAll()
-                        .requestMatchers("/auth/logout/").permitAll()
-                        .requestMatchers("/gerenciamento/**").hasRole("ECOPOINT_OWNER")
-                        .requestMatchers("/areaadmnistrativa/**").hasRole("ADMIN")
+//                        .requestMatchers("/auth/logout/").permitAll()
+//                        .requestMatchers("/gerenciamento/**").hasRole("ECOPOINT_OWNER")
+//                        .requestMatchers("/areaadmnistrativa/**").hasRole("ADMIN")
                 )
 //                .formLogin((form) -> form
 //                        .loginPage("/auth/login")
