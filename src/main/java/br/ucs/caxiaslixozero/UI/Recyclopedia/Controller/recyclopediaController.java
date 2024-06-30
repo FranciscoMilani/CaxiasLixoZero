@@ -1,5 +1,7 @@
 package br.ucs.caxiaslixozero.UI.Recyclopedia.Controller;
 
+import br.ucs.caxiaslixozero.Services.ResidueService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class recyclopediaController {
+
+    private final ResidueService residueService;
 
     @GetMapping("/reciclopedia")
     public String showReciclopedia() {
@@ -69,11 +74,8 @@ public class recyclopediaController {
 
     @GetMapping("/residuosEspeciais")
     public String getResiduosEspeciais(Model model) {
-        List<String> especiais = Arrays.asList(
-            "ELETRODOMÉSTICOS", "ELETRÔNICOS", "ESPONJAS", "GESSO", "LÂMPADAS", "MEDICAMENTOS", 
-            "ÓLEO DE COZINHA", "PILHAS E BATERIAS", "PNEUS", "RAIO-X", "SANDÁLIAS E CHINELOS", "SERINGAS E AGULHAS"
-        );
-        model.addAttribute("especiais", especiais);
+        var specialResidues = residueService.getAllResidues();
+        model.addAttribute("especiais", specialResidues);
         return "residuosEspeciais";
     }
 

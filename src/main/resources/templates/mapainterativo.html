@@ -11,21 +11,28 @@
         <div class="container p-3 d-flex flex-row justify-content-evenly" id="mapHeader">
             <select id="selectNeighborhood" class="form-select">
                 <option value="" selected>Qualquer bairro</option>
-                <option th:each="val, iter : ${neighborhoods}" th:value="${val}" th:text="${val}"></option>
+                <option th:each="val, iter : ${neighborhoods}"
+                        th:value="${val}"
+                        th:text="${val}">
+                </option>
             </select>
             <select id="selectResidue" class="form-select">
-                <option value="" selected>Qualquer resíduo</option>
-                <option th:each="val, iter: ${residueTypes}" th:value="${val.id}" th:text="${val.description}"></option>
+                <option value="">Qualquer resíduo</option>
+                <option th:each="val, iter: ${residueTypes}"
+                        th:value="${val.id}"
+                        th:text="${val.description}"
+                        th:selected="${val.id == selectedResidueId}">
+                </option>
             </select>
             <button id="clearFilters" class="btn btn-light"><i class="bi bi-trash-fill"></i></button>
         </div>
         <div id="map" class="bg-light" style="height: 60vh"></div>
     </div>
-
-
+    <script th:inline="javascript">
+        window.RESIDUE_PRESELECT = /*[[${selectedResidueId}]]*/
+    </script>
     <script th:inline="javascript">(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
     ({key: /*[[${key}]]*/, v: "weekly"});</script>
-
     <script th:inline="javascript" > var geoAPIKey = /*[[${geoKey}]]*/;</script>
     <script type="module" th:src="@{/js/EcopointMap.js}"></script>
 </body>

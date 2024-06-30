@@ -108,7 +108,14 @@ $(document).ready(function () {
                 clickableIcons: false
             });
 
-            $.get(window.location.href + "/listaecopontos")
+            // caso tenha vindo com residuo na url, não faz o retorno da lista de ecopontos inicial
+            // e atualiza select para retornar apenas o que for selecionado
+            if (window.RESIDUE_PRESELECT) {
+                $("#mapHeader select").trigger("change");
+                return;
+            }
+
+            $.get("mapa/listaecopontos") // window.location.href +
                 .done(function (data) {
                     $(data).each((i, entry) => {
                         const coords = {
@@ -120,7 +127,7 @@ $(document).ready(function () {
                     })
                 })
                 .fail((error) => {
-                    alert("Falha ao carregar ecopontos")
+                    alert("Falha ao carregar ecopontos: " + error)
                 })
         }
 

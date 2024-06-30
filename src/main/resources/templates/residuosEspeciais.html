@@ -35,23 +35,48 @@
 	                <input type="text" class="form-control" id="searchBar" placeholder="Pesquisar">
 	            </div>
 	            <div class="row">
-	                <div class="col-md-6">
-	                    <ul class="list-group" id="residuoList1">
-	                        <li th:each="residuo, iterStat : ${especiais}"
-	                            th:if="${iterStat.index % 2 == 0}"
-	                            class="list-group-item" th:text="${residuo}"></li>
-	                    </ul>
-	                </div>
+					<div class="col-md-6">
+						<ul class="list-group" id="residuoList1">
+							<li th:each="residuo, iterStat : ${especiais}"
+								th:if="${iterStat.index % 2 == 0}"
+								class="list-group-item"
+								th:id="${residuo.id}"  title="Encontrar ecopontos">
+								<div class="mx-auto d-flex justify-content-between special-residue-item align-content-center">
+									<span th:text="${residuo.description}"></span>
+									<div class="w-25 list-group-item-link text-center">
+										<i class="bi bi-pin-map-fill"></i>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
 	                <div class="col-md-6">
 	                    <ul class="list-group" id="residuoList2">
-	                        <li th:each="residuo, iterStat : ${especiais}"
-	                            th:if="${iterStat.index % 2 != 0}"
-	                            class="list-group-item" th:text="${residuo}"></li>
-	                    </ul>
+							<li th:each="residuo, iterStat : ${especiais}"
+								th:if="${iterStat.index % 2 != 0}"
+								class="list-group-item"
+								th:id="${residuo.id}">
+								<div class="mx-auto d-flex justify-content-between special-residue-item align-content-center">
+									<span th:text="${residuo.description}"></span>
+									<div class="w-25 list-group-item-link text-center">
+										<i class="bi bi-pin-map-fill"></i>
+									</div>
+								</div>
+							</li>
+						</ul>
 	                </div>
 	            </div>
 	        </div>
 	    </section>
 	</main>
+
+	<script type="text/javascript">
+			$(document).ready(function(){
+				$(".list-group-item").click(function(){
+					$id = $(this).attr('id');
+					window.location.href = '/mapa?residueId=' + $id;
+				})
+			})
+	</script>
 </body>
 </html>

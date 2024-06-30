@@ -297,6 +297,7 @@ button, a.btn {
     font-weight: 0;
     color: #002000;
     font-size: 24px;
+    cursor: pointer;
 }
 
 .listaResiduos .input-group-text {
@@ -338,6 +339,7 @@ button, a.btn {
 .listaResiduosEspeciais .list-group-item:nth-child(odd) {
     background-color: #eeeeee;
 }
+
 /* FIM - residuosEspeciais.html */
 
 /* COMEÇO - rejeitos.html*/
