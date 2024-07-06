@@ -1,53 +1,194 @@
-<html lang="pt-br"
-      xmlns:th="http://thymeleaf.org"
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Gerenciamento de Ecopontos</title>
+    <title>Lista Ecopontos do proprietário</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body layout:fragment="body">
-<div>
-    <main class="form-container">
-        <form class="centralized-form">
-            <div>
-                <label class="form-label" for="selectEcopoint">Ecoponto</label>
-                <select name="selectEcopoint" id="selectEcopoint" class="form-select">
-                    <option value="" selected></option>
-                    <option th:each="val, iter: ${ecopoints}" th:value="${val.id}" th:text="${val.description}"></option>
-                </select>
-            </div>
+<form action="/ecopointsFilter" method="post" class="row justify-content-center">
+    <div class="col-lg-2">
+        <div class="select-container">
+            <label for="companyName" class="form-label">Empresa:</label>
+            <input type="text" class="form-control" id="companyName" name="companyName"/>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="select-container">
+            <label for="responsibleName" class="form-label">Responsável:</label>
+            <input type="text" class="form-control" id="responsibleName" name="responsibleName"/>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="select-container">
+            <label for="socialNetwork" class="form-label">Rede Social:</label>
+            <input type="text" class="form-control" id="socialNetwork" name="socialNetwork"/>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="select-container">
+            <label for="solicitationDate" class="form-label">Data Solic.</label>
+            <input type="date" class="form-control" id="solicitationDate" name="solicitationDate"/>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="select-container">
+            <label for="statusSelect" class="form-label">Status</label>
+            <select class="form-select" id="statusSelect" name="statusSelect">
+                <option value="emAnalise">Em Análise</option>
+                <option value="aprovados">Aprovados</option>
+                <option value="reprovados">Reprovados</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <button type="submit" class="btn btn-primary" style="margin-top: 2.5rem;">Buscar</button>
+    </div>
+</form>
 
-            <div>
-                <div>
-                    <label class="form-label" for="selectMeasureType">Medida</label>
-                    <select name="selectMeasureType" id="selectMeasureType" class="form-select">
-                        <option value="" selected></option>
-                        <option th:each="val, iter: ${measureType}" th:value="${val.id}" th:text="${val.description}"></option>
-                    </select>
-                </div>
-                <div>
-                    <label for="amount" class="form-label">Quantidade</label>
-                    <input type="text" name="amount" id="amount" class="form-control">
-                </div>
-            </div>
+<table class="tableEcopoints" border="1">
+    <thead>
+    <tr>
+        <th>Endereço</th>
+        <th>Resíduos</th>
+        <th>Coleta</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ecopoint : ${ecopoints}">
+        <td>
+            <button class="btn btn-primary" th:attr="data-endereco=${'Rua ' + ecopoint.ecopointAddress.road +
+							', número ' + ecopoint.ecopointAddress.number + ', bairro ' + ecopoint.ecopointAddress.neighborhood}"
+                    onclick="openModalAddress(this.getAttribute('data-endereco'))">
+                <i class="fas fa-search"></i>
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-primary"
+                    th:attr="data-residues=${#strings.arrayJoin(ecopoint.residues.![description], ';')}"
+                    onclick="openResidueModal(this.getAttribute('data-residues'))">
+                <i class="fas fa-search"></i>
+            </button>
+        </td>
+        <td>
+            <button type="button" class="btn-coleta" th:attr="data-id=${ecopoint.id}">
+                <i class="bi bi-clipboard2-data-fill"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-            <div class="d-flex flex-row justify-content-between">
-                <div>
-                    <label class="form-label" for="inputStartDate">Data início</label>
-                    <input type="date" name="inputStartDate" id="inputStartDate" class="form-control">
-                </div>
-                <div>
-                    <label class="form-label" for="inputEndDate">Data fim</label>
-                    <input type="date" name="inputEndDate" id="inputEndDate" class="form-control">
-                </div>
+<div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addressModalLabel">Endereço</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
-
-            <div class="mt-4 d-flex flex-row justify-content-between"> <!-- container-form-buttons-->
-                <button type="button" class="btn btn-secondary">Voltar</button>
-                <button type="submit" class="btn btn-primary" style="flex-basis: 33%">Enviar coleta</button>
+            <div class="modal-body">
+                <p id="enderecoModalContent"></p>
             </div>
-        </form>
-    </main>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="modal fade" id="residueModal" tabindex="-1" aria-labelledby="residueModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="residueModalLabel">Resíduos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="centralized-form">
+                    <div>
+                        <label class="form-label" for="selectEcopoint">Ecoponto</label>
+                        <select name="selectEcopoint" id="selectEcopoint" class="form-select">
+                            <option value="" selected></option>
+                            <option th:each="val, iter: ${ecopoints}" th:value="${val.id}" th:text="${val.description}"></option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <div>
+                            <label class="form-label" for="selectMeasureType">Medida</label>
+                            <select name="selectMeasureType" id="selectMeasureType" class="form-select">
+                                <option value="" selected></option>
+                                <option th:each="val, iter: ${measureType}" th:value="${val.id}" th:text="${val.description}"></option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="amount" class="form-label">Quantidade</label>
+                            <input type="text" name="amount" id="amount" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-between">
+                        <div>
+                            <label class="form-label" for="inputStartDate">Data início</label>
+                            <input type="date" name="inputStartDate" id="inputStartDate" class="form-control">
+                        </div>
+                        <div>
+                            <label class="form-label" for="inputEndDate">Data fim</label>
+                            <input type="date" name="inputEndDate" id="inputEndDate" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="mt-4 d-flex flex-row justify-content-between">
+                        <button type="button" class="btn btn-secondary">Voltar</button>
+                        <button type="submit" class="btn btn-primary" style="flex-basis: 33%">Enviar coleta</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.btn-coleta').on('click', function () {
+
+    })
+</script>
+<script>
+    function openModalAddress(address) {
+        document.getElementById('enderecoModalContent').innerText = address;
+        var modal = new bootstrap.Modal(document.getElementById('addressModal'));
+        modal.show();
+    }
+</script>
+
+<script>
+    function openResidueModal(residues) {
+        var residueList = document.getElementById("residueList");
+        residueList.innerHTML = ""; // Limpa a lista de resíduos antes de adicionar os novos
+
+        // Só executa se possuir resíduos registrados
+        if (residues) {
+            // Separa a string de resíduos em uma lista
+            var residueArray = residues.split(';');
+
+            // Adiciona cada resíduo à lista
+            residueArray.forEach(function(residue) {
+                var listItem = document.createElement("li");
+                listItem.textContent = residue.trim(); // Remove espaços em branco extras
+                residueList.appendChild(listItem);
+            });
+        }
+
+        // Abre o modal
+        var myModal = new bootstrap.Modal(document.getElementById('residueModal'));
+        myModal.show();
+    }
+</script>
 </body>
 </html>

@@ -7,10 +7,16 @@ export default class MapFilter {
         const self = this;
 
         $(document).on("click", "#clearFilters", function () {
-            $("#selectNeighborhood").val("");
-            $("#selectResidue").val("");
             removeMarkers();
+            $("#selectNeighborhood").val("").trigger("change");
+            $("#selectResidue").val("").trigger("change")
         })
+
+        // $(document).on("click", "#loadDefault", function () {
+        //     removeMarkers();
+        //     $("#selectNeighborhood").val("").trigger("change");
+        //     $("#selectResidue").val("").trigger("change");
+        // })
 
         $(document).on("change", "#mapHeader select", function (event) {
             removeMarkers();

@@ -18,6 +18,7 @@ $(document).ready(function () {
         handlePermission();
 
         function populateInfoWindow(ecopoint) {
+            debugger
             const address = ecopoint.address;
 
             return `
@@ -29,7 +30,7 @@ $(document).ready(function () {
                     </div>
                     <div>
                         <p>Rua ${address.street}, nº ${address.number} - ${address.neighborhood}</p>
-                        <p>Das <span>${ecopoint.openingDateTime}</span> h às <span>${ecopoint.closingDateTime}</span> h</p>
+                        <p>Das <span>${ecopoint.openingTime}</span> h às <span>${ecopoint.closingTime}</span> h</p>
                     </div>
                     <div>
                         <ul>
@@ -95,17 +96,32 @@ $(document).ready(function () {
             const ZOOM = 13;
             const MAX_ZOOM = ZOOM + 4;
 
+            var stylesArray = [
+                {
+                    featureType: '',
+                    elementType: '',
+                    stylers: [
+                        {hue: ''},
+                        {color: ''},
+                        {visibility: ''},
+                    ]
+                },
+                {
+                    featureType: '',
+                }
+            ]
+
             map = new Map(document.getElementById("map"), {
                 center: ORIGIN,
                 zoom: ZOOM,
                 maxZoom: MAX_ZOOM,
                 minZoom: ZOOM,
-                mapId: "MAIN_ECP_MAP",
+                mapId: "29318c2a5b711652", // "MAIN_ECP_MAP"
                 mapTypeControl: false,
                 streetViewControl: false,
                 rotateControl: false,
                 fullscreenControl: false,
-                clickableIcons: false
+                clickableIcons: false,
             });
 
             // caso tenha vindo com residuo na url, não faz o retorno da lista de ecopontos inicial

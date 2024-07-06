@@ -66,8 +66,7 @@
 		</thead>
 		<tbody>
 			<tr th:each="ecopoint : ${ecopoints}">
-				<td
-					th:text="${#dates.format(ecopoint.solicitationDate, 'dd/MM/yyyy')}"></td>
+				<td th:text="${#dates.format(ecopoint.solicitationDate, 'dd/MM/yyyy')}"></td>
 				<td th:text="${ecopoint.companyName}"></td>
 				<td th:text="${ecopoint.email}"></td>
 				<td th:text="${ecopoint.responsibleName}"></td>

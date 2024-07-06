@@ -43,7 +43,6 @@ public class ecopointController {
 	public ModelAndView saveEcopoint(ModelAndView mv, Ecopoint ecopoint, Address address, @RequestParam(required = false, value="selectedResidues") List<Long> selectedResidues) {
 		address = this.ecopointServices.saveAddress(address);
 		var relatedResidueEntities = residueService.getAllResiduesByIdList(selectedResidues);
-		System.out.println(selectedResidues);
 		ecopoint.setResidues(relatedResidueEntities);
 		ecopoint.setEcopointAddress(address);
 		ecopoint.setSolicitationDate(new Date());

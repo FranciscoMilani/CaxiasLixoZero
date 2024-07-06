@@ -2,6 +2,7 @@ package br.ucs.caxiaslixozero.Domain.Entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalTime;
 import java.util.Collection;
@@ -23,13 +24,11 @@ public class Ecopoint {
     private String socialNetwork;
     @OneToOne
     private Address ecopointAddress;
-//    @ElementCollection
-//    @CollectionTable(name = "ecopoint_residues", joinColumns = @JoinColumn(name = "ecopoint_id"))
-//    @Column(name = "string")
-//    private List<String> residueType;
     private Boolean isPublic;
     private Date solicitationDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
 	private LocalTime openingTime;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
 	private LocalTime closingTime;
     private String imageUrl;
     private Boolean isApproved;

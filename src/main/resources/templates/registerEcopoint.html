@@ -78,17 +78,17 @@
 				<div class="step">
 					<fieldset>
 						<legend class="text-center">Especificações finais</legend>
-						<p>Tipo de resíduo que o Ecoponto vai receber (selecionar um ou mais!)</p>
+						<p>Tipo de resíduo que o Ecoponto vai receber*</p>
 						<div class="form-check">
 							<div th:each="opcao : ${opcoes}">
 								<input class="form-check-input input-residue" type="checkbox" th:data-id="${opcao.id}" th:value="${opcao.id}" th:id="'residue' + ${opcao.id}" name="selectedResidues"/>
 								<label class="form-check-label" th:text="${opcao.description}" th:for="'residue' + ${opcao.id}"></label>
-								<br/>
+								<br>
 							</div>
 							<div id="residueCheckboxInvalidFeedback" class="invalid-feedback">Selecione ao menos um resíduo</div>
 						</div>
-						<br/>
-						<br/>
+						<br>
+						<br>
 						<p>Seu Ecoponto vai ser aberto ao público em geral?*</p>
 						<div class="d-flex justify-content-around">
 							<div class="form-check form-check-inline">
@@ -98,17 +98,16 @@
 								<input class="form-check-input" name="isPublic" type="radio" th:field="*{isPublic}" value="false"/> Não
 							</div>
 						</div>
-					</fieldset>
-
-					<fieldset>
-						<legend class="text-center">Horários de acesso</legend>
+						<br>
+						<br>
+						<p>Informe os horários de acesso à localidade*</p>
 						<div class="d-flex flex-row justify-content-around">
 							<div class="w-35">
-								<label for="inputAbertura" class="form-label">Horário abertura</label>
+								<label for="inputAbertura" class="form-label">Abertura</label>
 								<input type="time" class="form-control" id="inputAbertura" name="openingTime" required/>
 							</div>
 							<div class="w-35">
-								<label for="inputFechamento" class="form-label">Horário fechamento</label>
+								<label for="inputFechamento" class="form-label">Fechamento</label>
 								<input type="time" class="form-control" id="inputFechamento" name="closingTime" required/>
 							</div>
 						</div>
@@ -135,6 +134,12 @@
 				const CEP_LENGTH = 8;
 				let cep = el.val();
 
+				if (isNaN(parseFloat(cep)) || !isFinite(cep)) {
+					showCepFeedback();
+					updateAddressFieldsFail();
+					return;
+				}
+
 				if (cep === "") {
 					$("#inputCep").removeClass("is-invalid");
 					updateAddressFieldsFail();
@@ -148,7 +153,6 @@
 				}
 
 				if (cep.length == CEP_LENGTH) {
-					cep = parseInt(cep);
 					$.get(`https://viacep.com.br/ws/${cep}/json/`).done(function (data) {
 						if (data.erro) {
 							showCepFeedback();
