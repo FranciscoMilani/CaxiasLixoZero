@@ -12,12 +12,6 @@ export default class MapFilter {
             $("#selectResidue").val("").trigger("change")
         })
 
-        // $(document).on("click", "#loadDefault", function () {
-        //     removeMarkers();
-        //     $("#selectNeighborhood").val("").trigger("change");
-        //     $("#selectResidue").val("").trigger("change");
-        // })
-
         $(document).on("change", "#mapHeader select", function (event) {
             removeMarkers();
             let neighborhood = $("#selectNeighborhood :selected").val();

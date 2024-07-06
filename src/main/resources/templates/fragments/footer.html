@@ -1,10 +1,57 @@
 <footer layout:fragment="footer">
-    <div class="py-3 mt-5 background">
-        <div class="container-fluid w-75">
-            <div class="text-end p-3 w-100">
+    <style>
+        #membersNames li {
+            list-style: none;
+        }
+
+        #contactsFooter li {
+            font-size: 2.5rem;
+            list-style: none;
+            margin-right: 15px;
+        }
+
+        #contactsFooter i {
+            color: #FFFD55;
+        }
+
+        #footer {
+            color: #FFFD55;
+        }
+
+         .vl {
+             border-left: 4px solid #FFFD55;
+         }
+    </style>
+    <div id="footer" class="py-3 mt-5" style="background: #5e91b0ff">
+        <div class="container-fluid w-75 d-flex flex-row justify-content-between">
+            <div class="text-start p-3">
                 <div>
-                    <p>Caxias Lixo Zero</p>
-                    <p>Trabalho desenvolvido para a disciplina de Projeto Temático 3</p>
+                    <p id="CaxiasLixoZero" class="fw-bold fs-3">Caxias Lixo Zero</p>
+                    <p class="fw-bold">Desenvolvido por</p>
+                    <div class="d-flex flex-row">
+                        <div class="vl"></div>
+                        <ul class="m-3 p-0" id="membersNames">
+                            <li>Ezequiel Benelli</li>
+                            <li>Francisco Milani</li>
+                            <li>Victor Menegotto</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="d-block m-auto">
+                <a href="https://www.caxiaslixozero.com.br/"><img src="/images/logo_branca_clz.png"></a>
+            </div>
+            <div class="text-end d-flex flex-column align-items-end justify-content-around">
+                <div>
+                    <ul id="contactsFooter" class="list-unstyled d-flex justify-content-between">
+                        <li class="mr-3"><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li class="mr-3"><a href="#"><i class="fab fa-whatsapp"></i></a></li>
+                        <li class="mr-3"><a href="#"><i class="fab fa-youtube"></i></a></li>
+                        <li class="mr-3"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <div class="text-end align-right">
+                    <a href="https://www.ucs.br/site"><img style="width: 5rem" src="/images/logo_ucs.png"></a>
                 </div>
             </div>
         </div>
