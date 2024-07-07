@@ -21,17 +21,19 @@ $(document).ready(function () {
             const address = ecopoint.address;
 
             return `
-                <div class="container d-flex flex-column">
+                <div class="ecopoint-window container d-flex flex-column">
                     <div>
                         <a href="tel:${ecopoint.phone}"><i class="bi bi-whatsapp"></i></a>
                         <a href="mailto:${ecopoint.email}"><i class="bi-envelope"></i></a>
-                        <p class="text-center">${ecopoint.title}</p>
+                        <p class="text-center fs-4">${ecopoint.title}</p>
                     </div>
                     <div>
-                        <p>Rua ${address.street}, nº ${address.number} - ${address.neighborhood}</p>
-                        <p>Das <span>${ecopoint.openingTime}</span> h às <span>${ecopoint.closingTime}</span> h</p>
+                        <p><i class="fa-solid fa-location-dot">&nbsp &nbsp</i>${address.street}, nº ${address.number} - ${address.neighborhood}</p>
+                        <p><i class="fa-solid fa-clock"></i>&nbsp &nbsp<span>${ecopoint.openingTime}</span>h - <span>${ecopoint.closingTime}</span>h</p>
                     </div>
                     <div>
+                     <hr>
+                     <span><i class="fa-solid fa-trash-can-arrow-up"></i>&nbsp &nbsp Resíduos</span>
                         <ul>
                              ${(ecopoint.residues || [`<li>Qualquer resíduo</li>`]).map(residue => `<li>${residue.description}</li>`).join('')}
                         </ul>
@@ -44,7 +46,7 @@ $(document).ready(function () {
             const marker = new AdvancedMarkerElement({
                 map: map,
                 position: mapCoords,
-                title: ecopoint.title,
+                title: "Ecoponto " + ecopoint.title,
                 content: createMarkerElement(ecopoint.id)
             });
 

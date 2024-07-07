@@ -63,6 +63,12 @@ body {
 	font-size: 14px;
 }
 
+.gm-style .gm-style-iw {
+    background-color: #ffffff !important;
+    color: #177393;
+    font-weight: bold;
+}
+
  /* CADASTRO ECOPONTO */
 
 fieldset {
@@ -86,7 +92,7 @@ fieldset {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    background-color: #f7f7f7;
+    background-color: #f3f3f3;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
