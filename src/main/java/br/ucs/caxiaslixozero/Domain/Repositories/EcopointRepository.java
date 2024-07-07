@@ -11,7 +11,7 @@ import java.util.List;
 public interface EcopointRepository extends JpaRepository<Ecopoint, Long> {
 
 	@Query("SELECT e FROM Ecopoint e JOIN e.residues r WHERE (:neighborhood IS NULL OR e.ecopointAddress.neighborhood LIKE %:neighborhood%) " +
-			"AND (:residueId IS NULL OR r.id = :residueId)")
+			"AND (:residueId IS NULL OR r.id = :residueId) AND e.isApproved = TRUE")
 	List<Ecopoint> findByNeighborhoodAndResidueId(@Param("neighborhood") String neighborhood, @Param("residueId") Long residueId);
 
 	@Query("SELECT e FROM Ecopoint e WHERE e.companyName LIKE %:company% AND " +	

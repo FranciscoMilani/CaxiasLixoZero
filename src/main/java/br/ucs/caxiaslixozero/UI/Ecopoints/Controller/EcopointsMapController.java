@@ -59,7 +59,7 @@ public class EcopointsMapController {
     @GetMapping("/listaecopontos")
     @ResponseBody
     public List<EcopointMapDto> getEcopoints() {
-        return ecopointServices.getAllToMapEcopoint();
+        return ecopointServices.getMapEcopointsFiltered("", null);
     }
 
     @GetMapping("/filtrar")

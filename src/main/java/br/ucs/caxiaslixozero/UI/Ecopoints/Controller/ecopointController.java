@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import br.ucs.caxiaslixozero.Domain.Entities.Address;
 import br.ucs.caxiaslixozero.Domain.Entities.Ecopoint;
 import br.ucs.caxiaslixozero.Services.Ecopoints.EcopointServices;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -27,12 +29,6 @@ public class ecopointController {
 	public ModelAndView registerEcopoint() {
 		ModelAndView mv = new ModelAndView("registerEcopoint");
 		mv.addObject("ecopoint", new Ecopoint());
-//		residuos.add("Esponjas de cozinha usadas");
-//		residuos.add("Embalagens Laminadas (de salgadinho, biscoitos, bombons, etc.)");
-//		residuos.add("Raios X (cartelas radiográficas)");
-//		residuos.add("Cápsulas de Café (de todas as marcas)");
-//		residuos.add("Óleo de Cozinha usado (preferível envasado em garrafa de plástico).");
-//		residuos.add("Eletrônicos de pequeno porte (mouse, notebook, celular, carregadores, etc.)");
 		mv.addObject("neighborhoods", Neighborhood.neighborhoodList);
 		mv.addObject("opcoes", residueService.getAllResidues());
 		mv.addObject("geoKey", Utils.getKeys(Ecopoint.class).get("geo"));
@@ -40,7 +36,11 @@ public class ecopointController {
 	}
 
 	@PostMapping("/registerEcopoint")
-	public ModelAndView saveEcopoint(ModelAndView mv, Ecopoint ecopoint, Address address, @RequestParam(required = false, value="selectedResidues") List<Long> selectedResidues) {
+	public ModelAndView saveEcopoint(ModelAndView mv,
+									 Ecopoint ecopoint,
+									 Address address,
+									 @RequestParam(required = false, value="selectedResidues") List<Long> selectedResidues,
+									 RedirectAttributes redirectAttributes) {
 		address = this.ecopointServices.saveAddress(address);
 		var relatedResidueEntities = residueService.getAllResiduesByIdList(selectedResidues);
 		ecopoint.setResidues(relatedResidueEntities);
@@ -48,7 +48,7 @@ public class ecopointController {
 		ecopoint.setSolicitationDate(new Date());
 		ecopoint.setIsApproved(null);
 		this.ecopointServices.saveEcopoint(ecopoint);
-		mv.addObject("aviso", "Ecoponto salvo!");
+		redirectAttributes.addFlashAttribute("aviso", "Ecoponto salvo!");
 		mv.setViewName("redirect:/registerEcopoint");
 		return mv;
 	}

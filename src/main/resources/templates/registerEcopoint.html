@@ -5,6 +5,14 @@
 	  layout:decorate="~{layout}">
 <head>
 	<title>Formulário Ecopontos</title>
+
+	<script th:inline="javascript">
+		var aviso = /*[[${aviso}]]*/;
+		if (aviso) {
+			alert(aviso);
+		}
+	</script>
+
 </head>
 <body layout:fragment="body">
 	<div>
@@ -92,10 +100,12 @@
 						<p>Seu Ecoponto vai ser aberto ao público em geral?*</p>
 						<div class="d-flex justify-content-around">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" name="isPublic" type="radio" th:field="*{isPublic}" value="true" required/> Sim
+								<input id="sim" class="form-check-input" name="isPublic" type="radio" th:field="*{isPublic}" value="true" required/>
+								<label for="sim">Sim</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" name="isPublic" type="radio" th:field="*{isPublic}" value="false"/> Não
+								<input id="nao" class="form-check-input" name="isPublic" type="radio" th:field="*{isPublic}" value="false"/>
+								<label for="nao">Não</label>
 							</div>
 						</div>
 						<br>
@@ -124,6 +134,7 @@
 		</section>
 	</main>
 	<script th:inline="javascript" > var geoAPIKey = /*[[${geoKey}]]*/;</script>
+
 	<script>
 		$(document).ready(function() {
 			$("#inputCep").on("keyup blur", function () {
@@ -253,5 +264,6 @@
 	</script>
 
 	<script type="text/javascript" th:src="@{/js/FormStep.js}"></script>
+
 </body>
 </html>
