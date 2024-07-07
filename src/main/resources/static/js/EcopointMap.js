@@ -18,7 +18,6 @@ $(document).ready(function () {
         handlePermission();
 
         function populateInfoWindow(ecopoint) {
-            debugger
             const address = ecopoint.address;
 
             return `
@@ -59,57 +58,33 @@ $(document).ready(function () {
 
         function handlePermission() {
             navigator.permissions.query({name: "geolocation"}).then((result) => {
+                console.log(result)
                 if (result.state === "granted") {
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
-                            const USER_COORDS = {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude
-                            };
-
-                            loadMap(USER_COORDS);
-                            createDefaultMarker(USER_COORDS);
+                            loadMap();
+                            createDefaultMarker(position.coords);
                         },
-                        function (positionError) {
-                            console.log(positionError)
-                        },
+                        function (positionError) { loadMap(); console.log(positionError) },
                         {enableHighAccuracy: true}
                     );
                 } else if (result.state === "prompt") {
                     navigator.geolocation.getCurrentPosition(
-                        (position) => loadMap(position.coords),
-                        function (positionError) {
-                            console.log(positionError)
-                        },
-                        {enableHighAccuracy: true}
+                        (position) => { loadMap(); createDefaultMarker(position.coords); },
+                        function (positionError) { loadMap(); console.log(positionError) },
+                        { enableHighAccuracy: true }
                     );
                 } else if (result.state === "denied") {
-                    console.log('denied')
+                    loadMap();
                 }
             });
         }
 
-        function loadMap(userCoords) {
+        function loadMap() {
             const CAXIAS_ORIGIN = {lat: -29.166, lng: -51.174};
-            //const ORIGIN = userCoords ? userCoords : CAXIAS_ORIGIN;
             const ORIGIN = CAXIAS_ORIGIN;
             const ZOOM = 13;
             const MAX_ZOOM = ZOOM + 4;
-
-            var stylesArray = [
-                {
-                    featureType: '',
-                    elementType: '',
-                    stylers: [
-                        {hue: ''},
-                        {color: ''},
-                        {visibility: ''},
-                    ]
-                },
-                {
-                    featureType: '',
-                }
-            ]
 
             map = new Map(document.getElementById("map"), {
                 center: ORIGIN,
@@ -163,8 +138,13 @@ $(document).ready(function () {
             }).element;
         }
 
-        function createDefaultMarker(userCoords) {
+        function createDefaultMarker(position) {
             const element = document.createElement("img");
+
+            const latLngObj = {
+                lat: position.latitude,
+                lng: position.longitude
+            };
 
             $(element).attr({
                 src: "/images/icons8-marker-green-64.png",
@@ -173,10 +153,11 @@ $(document).ready(function () {
 
             const marker = new AdvancedMarkerElement({
                 map: map,
-                position: userCoords,
+                position: latLngObj,
                 title: "Você",
-                content: new PinElement({ glyph: element }).element
+                content: new PinElement({ background: "#ffffff", borderColor: "#ffffff", glyph: element }).element,
             });
+
             // `<div class="border rounded-2 bg-dark"><h3 class="text-light text-center justify-content-center">Você</h3></div>`
             MARKERS.push(marker);
         }
