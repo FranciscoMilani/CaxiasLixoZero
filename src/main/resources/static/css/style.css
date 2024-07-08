@@ -35,18 +35,28 @@ body {
 
 .tableEcopoints {
 	border-collapse: collapse;
+    border: 4px solid #d5e873;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	width: 70%;
 	margin: 0 auto;
+    overflow: hidden;
 }
 
 .tableEcopoints th, .tableEcopoints td {
-	border: 1px solid #dddddd;
+	/*border: 1px solid #dddddd;*/
 	text-align: left;
 	padding: 8px;
+    color: #177393;
+}
+
+
+.tableEcopoints th, .tableEcopoints td:hover{
+    color: #d5e873;
 }
 
 .tableEcopoints th {
-	background-color: #f2f2f2;
+	background-color: #d5e873;
 	color: #333;
 }
 
@@ -54,14 +64,31 @@ body {
 	background-color: #f2f2f2;
 }
 
-.tableEcopoints tr:hover {
-	background-color: #ddd;
+.tableEcopoints tr:hover:not(.btn-delete) {
+	background-color: #92bcd2;
+    color: #d5e873;
+    font-weight: bolder;
 }
 
-.tableEcopoints {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
+.tableEcopoints tr:hover .btn-delete {
+    background: #d5e873;
+    color: indianred;
 }
+
+.btn-verde {
+    background: #d5e873;
+    color: #ffffff;
+}
+
+.btn-azul {
+    background: #177393;
+    color: #ffffff;
+}
+
+/*.tableEcopoints {*/
+/*	font-family: Arial, sans-serif;*/
+/*	font-size: 14px;*/
+/*}*/
 
 .gm-style .gm-style-iw {
     background-color: #ffffff !important;

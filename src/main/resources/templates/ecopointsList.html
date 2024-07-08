@@ -9,6 +9,9 @@
 </head>
 
 <body layout:fragment="body">
+<div class="container">
+	<h3>Filtros</h3>
+	<hr>
 	<form action="/ecopointsFilter" method="post" class="row justify-content-center">
 	    <div class="col-lg-2">
 	        <div class="select-container">
@@ -48,6 +51,7 @@
 	        <button type="submit" class="btn btn-primary" style="margin-top: 2.5rem;">Buscar</button>
 	    </div>
 	</form>
+</div>
 	
 	<table class="tableEcopoints" border="1">
 		<thead>
@@ -72,27 +76,30 @@
 				<td th:text="${ecopoint.responsibleName}"></td>
 				<td th:text="${ecopoint.responsiblePhone}"></td>
 				<td th:text="${ecopoint.socialNetwork}"></td>
-				<td>
+				<td class="text-center">
 					<button class="btn btn-primary" th:attr="data-endereco=${'Rua ' + ecopoint.ecopointAddress.road +
 							', número ' + ecopoint.ecopointAddress.number + ', bairro ' + ecopoint.ecopointAddress.neighborhood}"
 							onclick="openModalAddress(this.getAttribute('data-endereco'))">
 							<i class="fas fa-search"></i>
 					</button>
 				</td>
-				<td>
+				<td class="text-center">
 					<button class="btn btn-primary"
 							th:attr="data-residues=${#strings.arrayJoin(ecopoint.residues.![description], ';')}"
 							onclick="openResidueModal(this.getAttribute('data-residues'))">
 						<i class="fas fa-search"></i>
 					</button>
 				</td>
-				<td>
-					<button type="button" class="btn-aprovar" th:attr="data-id=${ecopoint.id}">
+				<td class="text-center">
+					<button type="button" class="btn-verde btn-aprovar" th:attr="data-id=${ecopoint.id}">
                         <i class="fas fa-check"></i>
-                    </button></td>
-                    <td><button type="button" class="btn-reprovar" th:attr="data-id=${ecopoint.id}">
+                    </button>
+				</td>
+				<td class="text-center">
+					<button type="button" class="btn-azul btn-reprovar" th:attr="data-id=${ecopoint.id}">
                         <i class="fas fa-close"></i>
-                    </button></td>
+                    </button>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -108,7 +115,7 @@
 				<p id="enderecoModalContent"></p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
 	      </div>
 	    </div>
 	  </div>
@@ -125,7 +132,7 @@
 	        <ul id="residueList"></ul>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
 	      </div>
 	    </div>
 	  </div>

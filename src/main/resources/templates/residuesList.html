@@ -12,25 +12,26 @@
 <div class="container">
     <div class="centered-btn">
         <button class="btn btn-primary small-btn" onclick="openRegisterResidueModal()">
+			<i class="fa-solid fa-plus"></i>
             Novo Resíduo
         </button>
     </div>
-	<table class="tableEcopoints" border="1">
+	<table class="mt-5 tableEcopoints">
 		<thead>
 			<tr>
-				<th>Nome</th>
-				<th>Descrição</th>
-				<th>Tipo</th>
-				<th>Excluir</th>
+				<th class="text-center">Nome</th>
+				<th class="text-center">Descrição</th>
+<!--				<th class="text-center">Tipo</th>-->
+				<th class="text-center">Excluir</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="residue : ${residues}">
 				<td th:text="${residue.name != null ? residue.name : ''}"></td>
 				<td th:text="${residue.description != null ? residue.description : ''}"></td>
-				<td th:text="${residue.residueType != null ? residue.residueType : ''}"></td>
-				<td>
-					<button type="button" class="btn-delete" th:attr="data-id=${residue.id}">
+<!--				<td th:text="${residue.residueType != null ? residue.residueType : ''}"></td>-->
+				<td class="text-center">
+					<button type="button" class="btn btn-delete" th:attr="data-id=${residue.id}">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
@@ -54,7 +55,7 @@
 						<input type="text" class="form-control" id="inputDescription" name="description"/>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-save" data-bs-dismiss="modal">Salvar</button>
+		        <button type="button" class="btn btn-primary btn-save" data-bs-dismiss="modal">Salvar</button>
 		      </div>
 		    </form>
 		      
