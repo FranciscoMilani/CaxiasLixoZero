@@ -248,7 +248,7 @@
 				const encodedCityBounds = '-29.255083,-51.054035%7C-29.073405,-51.315991';
 				const components = `postal_code:${address.cep}|locality:Caxias+do+Sul|administrative_area:RS|country:BR`;
 				const params = `json?address=${encodedAddress}&bounds=${encodedCityBounds}&components=${components}&key=${geoAPIKey}`;
-				debugger
+
 				if (encodedAddress && encodedAddress !== '') {
 					$.get(`https://maps.googleapis.com/maps/api/geocode/${params}`, (data) => {
 						if (data.status === "OK") {
