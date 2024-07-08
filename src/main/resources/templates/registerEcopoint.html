@@ -147,7 +147,7 @@
 		$(document).ready(function() {
 			$("#inputCep").on("keyup blur", function () {
 				getAddressByCEP($(this));
-				$("#selectBairro option").attr('disabled', false);
+				//$("#selectBairro option").attr('disabled', false);
 			})
 
 			function getAddressByCEP(el) {
@@ -209,7 +209,7 @@
 					$(this).prop("readonly", true);
 				})
 
-				$("#selectBairro option:not(:selected)").attr('disabled', true);
+				//$("#selectBairro option:not(:selected)").attr('disabled', true);
 
 				$("#inputRua").val(data.logradouro);
 				$("#selectBairro").val(data.bairro);
